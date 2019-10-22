@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Staff Page</title>
+
+    <link rel="stylesheet" href="../resources/css/staff-page.css">
+    <link rel="stylesheet" href="staff.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  </head>
+
+  <body>
+      <div class="container bg-dark d-flex">
+        <h1 class="display text-white mr-auto"> Meet the Staff </h1>
+
+        <!--NEED TO IMPLEMENT SEARCH FUNCTION FOR DROPDOWN-->
+        <div class="dropdown">
+          <button id="dropdownMenuButton" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Hall
+          </button>
+          <div id="hall-dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="card-container" class="container d-flex flex-wrap justify-content-center">
+
+
+      </div>
+
+      <!-- The following is the rough template of the staff card:
+
+        <div class="card bg-dark text-white text-left" style="width: 20rem; border-color: #CFB87C">
+
+          <div class="card-header">Header</div>
+
+          <img class="card-img-top" src="/blank_photo.png" alt="Card image cap">
+
+          <div class="card-body">
+            <h4 class="card-title"> Name </h4>
+            <h5 class="card-subtitle" style="color: #CFB87C"> Job Title </h5>
+            <p class="card-text">Hall: My Hall </p>
+          </div>
+
+        </div>
+      -->
+
+    <script type="text/javascript">
+      // the following data would be requested from server, depending on hall
+      var staffArray = [
+          {username: "jack", name: "Jack", occupation: "Hall Director", description: "From Boston. Like swimming and international affairs."},
+          {username: "sandra", name: "Sandra", occupation: "Resident Advisor", description: "description"},
+          {username: "matt", name: "Matt", occupation: "Resident Advisor", description: "description"},
+          {username: "", name: "April", occupation: "Resident Advisor", description: "description"},
+          {username: "", name: "Lindsey", occupation: "Resident Advisor", description: "description"},
+          {username: "tony", name: "Tony", occupation: "Resident Advisor", description: "From New York. Majoring in physics and engineering."},
+          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {username: "", name: "Name", occupation: "Occupation", description: "Description"}
+      ];
+
+      var hallArray = [
+        "Aden",
+        "Andrews",
+        "Arnett",
+        "Baker",
+        "Brackett",
+        "Buckingham",
+        "Cheyenne Arapaho",
+        "Cockerell",
+        "Crosman",
+        "Darley North",
+        "Darley South",
+        "Farrand",
+        "Hallet",
+        "Kittredge Central",
+        "Kittredge West",
+        "Libby",
+        "Reed",
+        "Sewall",
+        "Smith",
+        "Stearns East",
+        "Stearns West",
+        "Willard",
+        "Williams Village East",
+        "Williams Village North"
+      ]
+
+      // TO DO
+      function requestHallStaff(hallName) {
+          // send request for hall staff info
+          // clear staff array
+          // update staff array with received info
+      };
+
+      // TO DO - NOT WORKING!!!
+      function loadHallButtons() {
+        var hallButton;
+
+        for (index = 0; index < hallArray.length; index++) {
+          hallButton = document.createElement("button");
+          hallButton.classList.add("dropdown-item");
+          hallButton.innerHTML = hallArray[index];
+          hallButton.type = "button";
+
+          hallButton.onclick = function () {
+            requestHallStaff(hallArray[index]);
+            loadcards();
+          }
+
+          document.getElementById("hall-dropdown-menu").appendChild(hallButton);
+        }
+      }
+
+
+      // loads cards of staff members into HTML DOM using information from the staffArray
+      function loadCards () {
+        var newCard;
+
+        for (index = 0; index < staffArray.length; index++) {
+          newCard = document.createElement("div");
+          newCard.classList.add("card", "bg-dark");
+          newCard.style.width = "20rem";
+          newCard.style.margin = "1rem";
+          newCard.style.display = "inline-block";
+
+
+          var cardImage = document.createElement("img");
+          cardImage.classList.add("card-img-top");
+          cardImage.src = "../resources/img/staff-images/" + staffArray[index].username + ".jpg";
+          cardImage.onerror = function () {
+            this.onerror = null;
+            this.src = "../resources/img/staff-images/blank_photo.png";
+          };
+          cardImage.alt = "A picture of " + staffArray[index].name;
+
+
+          var cardBody = document.createElement("div");
+          cardBody.classList.add("card-body");
+
+          var cardName = document.createElement("h4");
+          cardName.innerHTML = staffArray[index].name;
+          cardName.classList.add("card-title");
+
+          var cardOccupation = document.createElement("h5");
+          cardOccupation.classList.add("card-subtitle");
+          cardOccupation.innerHTML = staffArray[index].occupation;
+
+          var cardDescription = document.createElement("p");
+          cardDescription.classList.add("card-text");
+          cardDescription.innerHTML = staffArray[index].description;
+
+          cardBody.appendChild(cardName);
+          cardBody.appendChild(cardOccupation);
+          cardBody.appendChild(cardDescription);
+
+          newCard.appendChild(cardImage);
+          newCard.appendChild(cardBody);
+
+          document.getElementById("card-container").appendChild(newCard);
+        }
+      }
+
+      window.onload = loadCards();
+      window.onload = loadHallButtons();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+
+</html>
