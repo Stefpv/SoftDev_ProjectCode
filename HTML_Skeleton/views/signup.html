@@ -2,20 +2,197 @@
 <html lang="en" dir="ltr">
 
   <head>
+    <style>
+      /* PASSWORD REQUIREMENTS */
+
+      /* Add a green text color and a checkmark when the password requirements are right */
+      .valid-password {
+        color: green;
+      }
+      .valid-password:before {
+        position: relative;
+        left: -5px;
+        content: '\2713';
+        font-size: 12px;
+      }
+
+      /* Add a red text color and an "x" when the password requirements are wrong */
+      .invalid-password {
+        color: red;
+      }
+      .invalid-password:before {
+        position: relative;
+        left: -5px;
+        content: '\00D7';
+        font-size: 12px;
+      }
+
+      /* OTHER FIELDS OF THE FORM */
+      
+      /* Add a green checkmark when the given field is correct */
+      .valid {
+        color: green;
+      }
+      .valid:before {
+        position: relative;
+        /* left: -5px; */
+        content: '\2713';
+        font-size: 15px;
+      }
+
+      /* Add a red 'x' when the given field is incorrect */
+      .invalid {
+        color: red;
+      }
+      .invalid:before {
+        position: relative;
+        /* left: -5px; */
+        content: '\00D7';
+        font-size: 15px;
+      }
+
+      /* Not allowed symbol of mouse when hovering over the submit button */
+      .not-allowed {cursor: not-allowed;}
+    </style>
     <meta charset="utf-8">
     <title>Sign Up</title>
-
     <link rel="stylesheet" href="../resources/css/form.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   </head>
 
   <body>
 
-    
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>Create Your Account</h1> 
+        </div>
+      </div>
+
+      <!-- Button that shows modal-->
+      <div>
+        <a href="#signUpModal" class="btn btn-primary" data-toggle="modal" data-backdrop="static" onclick="startSignUp()">Sign Up</a>
+      </div>
+
+      <!-- Modal Form -->
+      <div id="signUpModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Sign Up Page</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="resetForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label for="campusRegionSelect"> <h6>Campus Region</h6> </label>
+                    <select class="form-control form-control-sm" id="campusRegionSelect" required onchange="hallDropDown()">
+                    </select>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="residenceHallSelect"> <h6>Residence Hall</h6> </label>
+                    <select class="form-control form-control-sm" id="residenceHallSelect" required onchange="floorDropDown()">
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3.5">
+                    <label for="floorNumberSelect"> <h6>Floor</h6> </label>
+                    <select class="form-control form-control-sm" id="floorNumberSelect" required>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- First & Last Name -->
+                <h6>Name</h6>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <input type="text" name="firstName" class="form-control form-control-sm" id="firstName" placeholder="First Name" required>
+                  </div>
+                  <div class="form-group col">
+                      <input type="text" name="lastName" class="form-control form-control-sm" id="lastName" placeholder="Last Name" required>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <h6>Email</h6>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <input type="email" name="userEmail" class="form-control form-control-sm" id="staffEmail" placeholder="example@colorado.edu" required aria-describedby="emailRequirement"> 
+                    <small id="emailRequirement" class="form-text text-muted">Must be your student email associated with the university</small>
+                  </div>
+                  <div class="form-group col-md-1">
+                    <small id="validEmail"></small>
+                  </div>
+                </div> 
+
+                <!-- Password -->
+                <h6>Password</h6> 
+                <div class="form-row">
+                  <div class="form-group col">
+                    <input type="password" name="password" class="form-control form-control-sm" id="userPassword" placeholder="Enter Password" required>
+                  </div>
+                  <div class="form-group col">
+                    <input type="password" name="confirmPassword" class="form-control form-control-sm" id="confirmPassword" placeholder="Confirm Password" required>
+                  </div>
+                  <div class="form-group col-md-1">
+                    <small id="passwordsMatch"></small>
+                  </div>
+                </div>   
+                <p style="text-align: center;">
+                  <small >Password must contain the following:</small> <br>
+                  <small id="minimum">At least 12 characters</small> <br>
+                  <small id="lowercase"> At least one lowercase letter</small> <br>
+                  <small id="uppercase">At least one uppercase letter</small> <br>
+                  <small id="number">At least one number</small> <br>
+                  <small id="specialChar">At least one special (non-alphanumeric) character</small>
+                </p>  
+
+
+                <!-- Region -->
+                <!-- <h6>Campus Region</h6>
+                <div class="form-group">
+                  <select class="form-control" id="campusRegionSelect" required="required" onchange="hallDropDown()">
+                  </select>
+                </div> -->
+
+                <!-- Hall -->
+                <!-- <h6>Residence Hall</h6>
+                <div class="form-group">
+                  <select class="form-control" id="residenceHallSelect" required="required">
+                  </select>
+                </div> -->
+
+                <!-- Floor -->
+                <!-- <h6>Floor Number</h6>
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userFloor" id="basement">
+                    <label class="form-check-label" for="basement">Basement</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userFloor" id="floor1">
+                    <label class="form-check-label" for="basement">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userFloor" id="floor2">
+                    <label class="form-check-label" for="basement">2</label>
+                  </div>
+                </div> -->
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Close</button>
+              <button class="btn btn-primary not-allowed" id="mySubmitButton" disabled>Submit</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>  
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="../resources/js/signUpScripts.js"></script>
   </body>
 
 </html>
