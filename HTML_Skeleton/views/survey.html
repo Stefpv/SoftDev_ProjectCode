@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Survey Page</title>
+    
+        <link rel='icon' href='../resources/img/favicon.ico' type='image/x-icon'/>
+    
+        <link rel="stylesheet" href="../resources/css/general.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel = "stylesheet" href = "style.css">
+        
+        <style> 
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #CFB87C;"> <!-- gold:F7DC6F Blue:4498F9 -->
+            <a class="navbar-brand" href="resourcepage.html"> <!-- href="home.html" -->
+                <img class="img-fluid" src="../resources/img/Colorado_Buffaloes_logo.svg.png" alt="" width="50" height="50" class="d-inline-block align-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" href="homepage.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                <a class="nav-link" href="resourcepage.html">Resources</a>
+                </li>
+                <li class="nav-item active">
+                <a class="nav-link" href="login.html">Log in </a>
+                </li>
+                <li class="nav-item active">
+                <a class="nav-link" href="survey.html">Survey</a>
+                </li>
+                </ul>
+            </div>
+        </nav>
+        <div class = "container mt-3">
+            <div class = "jumbotron text-left" style = "background-color:#CFB87C;">
+                <h1><font color = "black">Feedback Form</font></h1>
+            </div>
+            <form>
+                <div class = "form-group">
+                    <label for = "NameInput"><h3>Name</h3></label>
+                    <input type = "text" class = "form-control" id = "NameInput" placeholder="Name">
+                </div> <br> 
+
+                <h3>Urgency of the issue</h3>
+                <body><h6>1 being most urgent</h6></body> <br>
+                <div class = "row">
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L1" value = "option1" checked>
+                            <label class = "form-check-label" for = "L1">1</label>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L2" value = "option2" checked>
+                            <label class = "form-check-label" for = "L2">2</label>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L3" value = "option3" checked>
+                            <label class = "form-check-label" for = "L3">3</label>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L4" value = "option4" checked>
+                            <label class = "form-check-label" for = "L4">4</label>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L5" value = "option5" checked>
+                            <label class = "form-check-label" for = "L5">5</label>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class = "form-check">
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L6" value = "option6" checked>
+                            <label class = "form-check-label" for = "L6">6</label>
+                        </div>
+                    </div>
+                </div> <br>
+                <div class="form-group">
+                    <label><h3>Comments</h3></label>
+                    <textarea id = "comments" ></textarea>
+                </div>
+            </form> <br> 
+            <h3>Check all of the below</h3>
+            <div class = "row">
+                <div class = "col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="Checkbox1" value="option1">
+                        <label class="form-check-label" for="Checkbox1">&nbsp;&nbsp;Scheduling</label>
+                    </div>
+                </div>
+                <div class = "col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="Checkbox2" value="option2">
+                        <label class="form-check-label" for="Checkbox2">&nbsp;&nbsp;Dorm</label>
+                    </div>
+                </div>
+                <div class = "col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="Checkbox3" value="option3">
+                        <label class="form-check-label" for="Checkbox3">&nbsp;&nbsp;Facilities</label>
+                    </div>
+                </div>
+                <div class = "col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="Checkbox4" value="option4">
+                        <label class="form-check-label" for="Checkbox4">&nbsp;&nbsp;Coworkers</label>
+                    </div>
+                </div>
+                <div class = "col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="Checkbox5" value="option5">
+                        <label class="form-check-label" for="Checkbox5">&nbsp;&nbsp;Events</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form> 
+            <div class="container mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </body>
+</html>

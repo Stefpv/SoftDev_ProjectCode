@@ -1,0 +1,14 @@
+.card-img-top {
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
+}
+
+.card {
+  color: white;
+  text-align: left;
+}
+
+.card-subtitle {
+  color: #CFB87C;
+}
