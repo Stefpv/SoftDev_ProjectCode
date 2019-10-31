@@ -1,160 +1,32 @@
-// Create object for each region, which will contain the region name and an array of the residence halls in the region
-var centralCampus = {
-    region: "Central Campus",
-    halls: [{hallName: "Aden", floorNumbers: [1,2]},{hallName: "Baker", floorNumbers: [1,2,3,4,5]},{hallName: "Bracket", floorNumbers: [1,2]},{hallName: "Cheyenne Arapaho", floorNumbers: [1,2,3]},{hallName: "Cockerell", floorNumbers: [1,2]},{hallName: "Crosman", floorNumbers: [1,2]},{hallName: "Farrand", floorNumbers: [1,2,3,4,5]},{hallName: "Hallet", floorNumbers: [1,2,3]},{hallName: "Libby", floorNumbers: [1,2,3]},{hallName: "Reed", floorNumbers: [1,2]},{hallName: "Willard", floorNumbers: [1,2,3]}]
-};
+/** Project: Residence Hall Advisor Portal
+ *  This file: controls the functionality of the sign up page
+ */
 
-var kittredgeLoop = {
-    region: "Kittredge Loop",
-    halls: [{hallName: "Andrews", floorNumbers: [1,2,3]},{hallName: "Arnett", floorNumbers: [1,2,3]},{hallName: "Buckingham", floorNumbers: [1,2,3]},{hallName: "Kittredge Central", floorNumbers: [1,2,3,4]},{hallName: "Kittredge West", floorNumbers: [1,2,3,4]},{hallName: "Smith", floorNumbers: [1,2,3]}]
-};
-
-var willVill = {
-    region: "Williams Village",
-    halls: [{hallName: "Darley North", floorNumbers: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]},{hallName: "Darley South", floorNumbers: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]},{hallName: "Stearns East", floorNumbers: [1,2,3,4,5,6,7,8,9,10,11,12,13]},{hallName: "Stearns West", floorNumbers: [1,2,3,4,5,6,7,8,9,10,11,12,13]},{hallName: "Williams Village East", floorNumbers: [1,2,3,4,5,6,7]},{hallName: "Williams Village North", floorNumbers: [1,2,3,4,5,6]}]
-};
-
-var sewall = {
-    region: "Sewall",
-    halls: [{hallName: "Sewall", floorNumbers: [1,2,3,4,5]}]
-};
-
-// Array to hold the 4 regions
-var campusRegions = [centralCampus,kittredgeLoop,sewall,willVill];
-
-// Function that creates the menu of campus regions
-function regionDropDown(){
-    
-    var regionSelection = document.getElementById("campusRegionSelect");
-
-    // The first option in the menu is just telling the user to select one of the following options
-    var dropDownTitle = document.createElement('option');
-    dropDownTitle.setAttribute('value',"Select Region");
-    dropDownTitle.setAttribute('label',"Select Region");
-    dropDownTitle.setAttribute('selected',true);
-    regionSelection.add(dropDownTitle);
-
-    var counter;
-    for(counter=0; counter<campusRegions.length; counter++){
-        var newRegion = document.createElement('option');
-        newRegion.setAttribute('value',campusRegions[counter].region);
-        newRegion.setAttribute('label',campusRegions[counter].region);
-        regionSelection.add(newRegion);
-    }
-}
-
-// Fills the hall menu depending on which region is selected
-function hallDropDown(){
-
-    // Access the region that has been selected, and the hall menu
-    var regionName = document.getElementById("campusRegionSelect").value;
-    var hallSelect = document.getElementById("residenceHallSelect");
-    var length = hallSelect.length;
-
-    // Clear out the current options
-    if(length > 0){
-        var k;
-        for(k=length; k>=0; k--){
-            hallSelect.remove(k);
-        }
-    }
-    
-    // The first option in the menu is just telling the user to select one of the following options
-    var dropDownTitle = document.createElement('option');
-    dropDownTitle.setAttribute('value',"Select Residence Hall");
-    dropDownTitle.setAttribute('label',"Select Residence Hall");
-    dropDownTitle.setAttribute('selected',true);
-    hallSelect.add(dropDownTitle);
-
-    // Add the new options
-    var i;
-    for(i=0; i<campusRegions.length; i++){
-        if(regionName == campusRegions[i].region){
-            var j;
-            for(j=0; j<campusRegions[i].halls.length; j++){
-                var newHall = document.createElement('option');
-                newHall.setAttribute('value',campusRegions[i].halls[j].hallName);
-                newHall.setAttribute('label',campusRegions[i].halls[j].hallName);
-                hallSelect.add(newHall);
-            }
-            break;
-        }
-    }
-
-    floorDropDown();
-}
-
-function floorDropDown(){
-
-    // Access menus
-    var regionName = document.getElementById("campusRegionSelect").value;
-    var selectedHall = document.getElementById("residenceHallSelect").value;
-    var floorNumber = document.getElementById("floorNumberSelect");
-
-    // Length of the floor dropdown
-    var length = floorNumber.length;
-
-    // Clear out the current options
-    if(length > 0){
-        var l;
-        for(l=length; l>=0; l--){
-            floorNumber.remove(l);
-        }
-    }
-
-    // The first option in the menu is just telling the user to select one of the following options
-    var dropDownTitle = document.createElement('option');
-    dropDownTitle.setAttribute('value',"Select Floor");
-    dropDownTitle.setAttribute('label',"Select Floor");
-    dropDownTitle.setAttribute('selected',true);
-    floorNumber.add(dropDownTitle);
-
-    // Search through campus regions and find the current hall, and then add the number of floors in that given hall
-    var i;
-    for(i=0; i<campusRegions.length; i++){
-        if(campusRegions[i].region == regionName){
-            var j;
-            for(j=0; j<campusRegions[i].halls.length; j++){
-                if(campusRegions[i].halls[j].hallName == selectedHall){
-                    var k;
-                    for(k=0; k<campusRegions[i].halls[j].floorNumbers.length; k++){
-                        var newFloor = document.createElement('option');
-                        newFloor.setAttribute('value',campusRegions[i].halls[j].floorNumbers[k]);
-                        newFloor.setAttribute('label',campusRegions[i].halls[j].floorNumbers[k].toString());
-                        floorNumber.add(newFloor);
-                    }
-                    break;
-                }
-            }
-            break;
-        }
-    }
-}
-
-function enableButton(region, residenceHall, floorNumber, firstName, lastName, email, minimumLength, lowercase, uppercase, number, specChar, psswdsMatch){
+// Enables the button if all fields of the form are filled
+function enableButton(firstName, lastName, residentAdvisor, hallDirecor, email, studentID, minimumLength, lowercase, uppercase, number, specChar, psswdsMatch){
     // Check that all fields are filled
     console.log("inside enable button");
-
-        // Check that the dropdown menus have an option other than the first selected
-        var livingSituationFilled = (region.value != "Select Region") && (residenceHall.value != "Select Residence Hall") && (floorNumber.value != "Select Floor");
-        if(livingSituationFilled){
-            console.log("Living Situation is filled");
-        }
 
         // Check that the name fields are not empty
         var namesFilled = (firstName.value != "") && (lastName.value != "");
 
-        // Check that the email ends in @colorado.edu
+        // Check that either the RA of Hall Director options are checked off
+        var staffPositionSelected = (residentAdvisor.checked == true) || (hallDirecor.checked == true);
+
+        // Check that the email is valid
         var checkEmail = email.classList.contains("valid");
+
+        // Check that the studnet ID is valid
+        var checkID = studentID.classList.contains("valid");
         
-        // Check that the password requirements are all of class="valid"
+        // Check that the password requirements are all valid
         var psswdRequirementsMet = minimumLength.classList.contains("valid-password") && lowercase.classList.contains("valid-password") && uppercase.classList.contains("valid-password") && number.classList.contains("valid-password") && specChar.classList.contains("valid-password");
 
         // Check that the confirm password is valid
         var checkConfPassword = psswdsMatch.classList.contains("valid");
         
         // if all of the requirements are met, enable the submit button
-        if(livingSituationFilled && namesFilled && checkEmail && psswdRequirementsMet && checkConfPassword){
+        if(namesFilled && staffPositionSelected && checkEmail && checkID && psswdRequirementsMet && checkConfPassword){
             var submitButton = document.getElementById("mySubmitButton");
             submitButton.disabled = false;
             submitButton.classList.remove("not-allowed");
@@ -163,43 +35,39 @@ function enableButton(region, residenceHall, floorNumber, firstName, lastName, e
 
 function startSignUp(){
 
-    // Create region drop down
-    regionDropDown();
-
-    // Create hall drop down
-    hallDropDown();
-
-    // Create floor drop down
-    floorDropDown();
-
     // Retrieve variable inputs from the form
-    var region = document.getElementById("campusRegionSelect");
-    var residentHall = document.getElementById("residenceHallSelect");
-    var floorNumber = document.getElementById("floorNumberSelect");
     var firstName = document.getElementById("firstName");
     var lastName = document.getElementById("lastName");
+    var residentAdvisor = document.getElementById("residentAdvisor");
+    var hallDirector = document.getElementById("hallDirector");
     var email = document.getElementById("staffEmail");
+    var studentID = document.getElementById("studentID");
     var password = document.getElementById("userPassword");
     var confirmPassword = document.getElementById("confirmPassword");
-
-    // Try to enable the button once the floor has been chosen
-    floorNumber.onchange = function(){
-        // enable the button if all fields are valid
-        enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
-    }
 
     // Try to enable the button when the first name and last name fields are being completed
     firstName.onblur = function(){
         // enable the button if all fields are valid
-        enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
+
     lastName.onblur = function(){
         // enable the button if all fields are valid
-        enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+    }
+
+    // Try to enable the button when one of the staff positions is selected
+    residentAdvisor.onclick = function(){
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+    }
+
+    hallDirector.onclick = function(){
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     // Retrieve requirement fields
     var emailValid = document.getElementById("validEmail");
+    var studentIDvalid = document.getElementById("validStudentID");
     var minimum = document.getElementById("minimum");
     var lowerLetter = document.getElementById("lowercase");
     var upperLetter = document.getElementById("uppercase");
@@ -218,8 +86,8 @@ function startSignUp(){
         email.onkeyup = function(){
 
             // Create regular expressions to check that the email is @colorado.edu
-            var studentEmail1 = /[a-z]+\.[a-z]+@colorado.edu$/g;
-            var studentEmail2 = /[a-z]{4}[0-9]{4}@colorado.edu$/g;
+            var studentEmail1 = /^[a-z]+\.[a-z]+@colorado.edu$/g;
+            var studentEmail2 = /^[a-z]{4}[0-9]{4}@colorado.edu$/g;
 
             // Validate the email
             if(email.value.match(studentEmail1) || email.value.match(studentEmail2)){
@@ -230,8 +98,9 @@ function startSignUp(){
                 emailValid.classList.add("invalid");
                 emailValid.classList.remove("valid");
             }
+
             // enable the button if all fields are valid
-            enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }
     }
 
@@ -239,6 +108,41 @@ function startSignUp(){
     email.onblur = function(){
         if(email.value == ""){
             emailValid.classList.remove("valid","invalid");
+        }
+    }
+
+    // Check that the student ID is correct format
+    studentID.onfocus = function(){
+        
+        // Set the requirement mark as wrong if nothing has been typed
+        if(studentID.value == ""){
+            studentIDvalid.classList.add("invalid");
+        }
+
+        studentID.onkeyup = function(){
+            
+            // Regular expression to check that the ID is a 9 digit number
+            var nineDigitNum = /[0-9]{9}/g;
+
+            // Validate the ID
+            if(studentID.value.match(nineDigitNum)){
+                studentIDvalid.classList.add("valid");
+                studentIDvalid.classList.remove("invalid");
+            }
+            else{
+                studentIDvalid.classList.add("invalid");
+                studentIDvalid.classList.remove("valid");
+            }
+
+            // enable the button if all fields are valid
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        }
+    }
+
+    // Reset the ID indicator if the ID field is emtpy
+    studentID.onblur = function(){
+        if(studentID.value == ""){
+            studentIDvalid.classList.remove("valid","invalid");
         }
     }
 
@@ -308,7 +212,7 @@ function startSignUp(){
             }
 
             // enable the button if all fields are valid
-            enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }        
     }
 
@@ -340,7 +244,7 @@ function startSignUp(){
             }
 
             // enable the button if all fields are valid
-            enableButton(region,residentHall,floorNumber,firstName,lastName,emailValid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }
     }
 
@@ -352,47 +256,34 @@ function startSignUp(){
     }
 }
 
-
+// Resets the form when the user exits the modal
 function resetForm(){
 
     // Access the various inputs
     var firstName = document.getElementById("firstName");
     var lastName = document.getElementById("lastName");
+    var residentAdvisor = document.getElementById("residentAdvisor");
+    var hallDirector = document.getElementById("hallDirector");
     var email = document.getElementById("staffEmail");
+    var studentID = document.getElementById("studentID");
     var password = document.getElementById("userPassword");
     var confirmPassword = document.getElementById("confirmPassword");
-    var regions = document.getElementById("campusRegionSelect");
-    var residentHalls = document.getElementById("residenceHallSelect");
-    var floorNumbers = document.getElementById("floorNumberSelect");
+
+    // Reset the radio for the staff position
+    residentAdvisor.checked = false;
+    hallDirector.checked = false;
 
     // Reset all inputs
     firstName.value = "";
     lastName.value = "";
     email.value = "";
+    studentID.value = "";
     password.value = "";
     confirmPassword.value = "";
 
-    var hallLength = residentHalls.length;
-    var regionLength = regions.length;
-    var floorLength = floorNumbers.length;
-
-    var i;
-    for(i=hallLength; i>=0; i--){
-        residentHalls.remove(i);
-    }
-
-    var j;
-    for(j=regionLength; j>=0; j--){
-        regions.remove(j);
-    }
-
-    var k;
-    for(k=floorLength; k>=0; k--){
-        floorNumbers.remove(k);
-    }
-
     // Retrieve requirement fields
     var emailValid = document.getElementById("validEmail");
+    var IDvalid = document.getElementById("validStudentID");
     var minimum = document.getElementById("minimum");
     var lowerLetter = document.getElementById("lowercase");
     var upperLetter = document.getElementById("uppercase");
@@ -410,6 +301,9 @@ function resetForm(){
     // Reset the email requirement mark
     emailValid.classList.remove("valid","invalid");
 
+    // Reset the ID requirement mark
+    IDvalid.classList.remove("valid","invalid");
+
     // Reset the confirm password requirement mark
     match.classList.remove("valid","invalid");
 
@@ -418,3 +312,18 @@ function resetForm(){
     submitBtn.disabled = true;
     submitBtn.classList.add("not-allowed");
 }
+
+/**  TO DO FOR SIGN UP
+ * 1. Once all of the fields are filled, make sure that each input is saved in a variable.
+ * 2. Using node.js, get the information from the the sign up form.
+ * 3. Run a query on the existing university data base to see if the information entered matches an existing staff member.
+ *      3a. If the user exists in the staff database, then fill in all of their information on the website database and redirect them either to the RA portal 
+ *          (our website), or refresh the page and have them login.
+ *      3b. If the user does not exist, start with a message saying that they may have entered some of their information incorrectly, provide information with who they
+ *          can contact for issues, and ask them to try again. If they continue to have issues signing up, they are probably not an RA.
+ */
+
+
+/**  TO DO FOR LOG IN
+ * 
+ */
