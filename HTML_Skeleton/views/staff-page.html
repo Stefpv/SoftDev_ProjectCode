@@ -11,42 +11,84 @@
   </head>
 
   <body>
+      <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #CFB87C;"> <!-- gold:F7DC6F Blue:4498F9 -->
+        <a class="navbar-brand" href="resourcepage.html"> <!-- href="home.html" -->
+          <img class="img-fluid" src="../resources/img/Colorado_Buffaloes_logo.svg.png" alt="" width="50" height="50" class="d-inline-block align-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="homepage.html">Home</a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="">Staff</a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="staff_form.html">Profile</a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="resourcepage.html">Resources</a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="survey.html">Survey</a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="login.html">Log in </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
       <div class="container bg-dark d-flex">
-        <h1 class="display text-white mr-auto"> Meet the Staff </h1>
+        <h1 id="title" class="display text-white mr-auto"> Meet the Staff </h1>
 
         <!--NEED TO IMPLEMENT SEARCH FUNCTION FOR DROPDOWN-->
         <div class="dropdown">
-          <button id="dropdownMenuButton" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="dropdownMenuButton" class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select Hall
           </button>
           <div id="hall-dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
+            <!-- buttons should populate here -->
           </div>
         </div>
 
       </div>
 
       <div id="card-container" class="container d-flex flex-wrap justify-content-center">
-
-
+        <!-- cards should populate here -->
       </div>
 
       <!-- The following is the rough template of the staff card:
-
+      -->
         <div class="card bg-dark text-white text-left" style="width: 20rem; border-color: #CFB87C">
 
-          <div class="card-header">Header</div>
-
-          <img class="card-img-top" src="/blank_photo.png" alt="Card image cap">
+          <img class="card-img-top" src="../resources/img/staff-images/blank_photo.png" alt="Card image cap">
 
           <div class="card-body">
             <h4 class="card-title"> Name </h4>
             <h5 class="card-subtitle" style="color: #CFB87C"> Job Title </h5>
-            <p class="card-text">Hall: My Hall </p>
-          </div>
 
+            <div class="row">
+              <div class="col">
+                <p class="card-text">Major: </p>
+              </div>
+              <div class="col">
+                <p class="card-text">Gender: </p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                  <p class="card-text">A really long description that should contain enough words so that everyone can get to know about me.</p>
+                </div>
+            </div>
+
+          </div>
         </div>
-      -->
+
 
     <script type="text/javascript">
       // the following data would be requested from server, depending on hall
@@ -64,7 +106,7 @@
           {username: "", name: "Name", occupation: "Occupation", description: "Description"}
       ];
 
-      var hallArray = [
+      const hallArray = [
         "Aden",
         "Andrews",
         "Arnett",
@@ -91,32 +133,12 @@
         "Williams Village North"
       ]
 
-      // TO DO
+      // TO DO: function that connects with server to pull staff info and update JSON entries
       function requestHallStaff(hallName) {
           // send request for hall staff info
           // clear staff array
           // update staff array with received info
       };
-
-      // TO DO - NOT WORKING!!!
-      function loadHallButtons() {
-        var hallButton;
-
-        for (index = 0; index < hallArray.length; index++) {
-          hallButton = document.createElement("button");
-          hallButton.classList.add("dropdown-item");
-          hallButton.innerHTML = hallArray[index];
-          hallButton.type = "button";
-
-          hallButton.onclick = function () {
-            requestHallStaff(hallArray[index]);
-            loadcards();
-          }
-
-          document.getElementById("hall-dropdown-menu").appendChild(hallButton);
-        }
-      }
-
 
       // loads cards of staff members into HTML DOM using information from the staffArray
       function loadCards () {
@@ -129,7 +151,7 @@
           newCard.style.margin = "1rem";
           newCard.style.display = "inline-block";
 
-
+          // give some flexibility for reasonably sized images
           var cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
           cardImage.src = "../resources/img/staff-images/" + staffArray[index].username + ".jpg";
@@ -138,7 +160,6 @@
             this.src = "../resources/img/staff-images/blank_photo.png";
           };
           cardImage.alt = "A picture of " + staffArray[index].name;
-
 
           var cardBody = document.createElement("div");
           cardBody.classList.add("card-body");
@@ -151,12 +172,18 @@
           cardOccupation.classList.add("card-subtitle");
           cardOccupation.innerHTML = staffArray[index].occupation;
 
+          var cardMajor = document.createElement("p");
+          cardMajor.classList.add("card-text");
+          cardMajor.innerHTML = "TEST Major";
+
+          // TO DO: make sure card text is readable up to 300 chararacters
           var cardDescription = document.createElement("p");
           cardDescription.classList.add("card-text");
           cardDescription.innerHTML = staffArray[index].description;
 
           cardBody.appendChild(cardName);
           cardBody.appendChild(cardOccupation);
+          cardBody.appendChild(cardMajor);
           cardBody.appendChild(cardDescription);
 
           newCard.appendChild(cardImage);
@@ -166,8 +193,38 @@
         }
       }
 
-      window.onload = loadCards();
-      window.onload = loadHallButtons();
+      // loads buttons for each hall using array
+      function loadHallButtons() {
+
+        for (index = 0; index < hallArray.length; index++) ( function(index) {
+          var hallName = hallArray[index];
+          var hallButton = document.createElement("button");
+
+          hallButton.classList.add("dropdown-item");
+          hallButton.innerHTML = hallName;
+          hallButton.type = "button";
+
+          hallButton.onclick = function () {
+            updatePage(hallName);
+          };
+
+          document.getElementById("hall-dropdown-menu").appendChild(hallButton);
+        })(index);
+      }
+
+      // updates pages, given a hall name
+      function updatePage (hallName) {
+        requestHallStaff(hallName);
+        loadCards();
+        document.getElementById("dropdownMenuButton").innerHTML = hallName;
+      }
+
+      // initial page load
+        // load buttons once
+        window.onload = loadHallButtons();
+        // TO DO: change argument to user's dorm, to see their staff as default
+        window.onload = updatePage("Stearns East");
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
