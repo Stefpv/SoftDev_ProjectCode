@@ -62,7 +62,6 @@
       </div>
 
       <!-- The following is the rough template of the staff card:
-      -->
         <div class="card bg-dark text-white text-left" style="width: 20rem; border-color: #CFB87C">
 
           <img class="card-img-top" src="../resources/img/staff-images/blank_photo.png" alt="Card image cap">
@@ -88,7 +87,7 @@
 
           </div>
         </div>
-
+      -->
 
     <script type="text/javascript">
       // the following data would be requested from server, depending on hall
@@ -172,9 +171,9 @@
           cardOccupation.classList.add("card-subtitle");
           cardOccupation.innerHTML = staffArray[index].occupation;
 
-          var cardMajor = document.createElement("p");
-          cardMajor.classList.add("card-text");
-          cardMajor.innerHTML = "TEST Major";
+          // var cardMajor = document.createElement("p");
+          // cardMajor.classList.add("card-text");
+          // cardMajor.innerHTML = "TEST Major";
 
           // TO DO: make sure card text is readable up to 300 chararacters
           var cardDescription = document.createElement("p");
@@ -183,7 +182,7 @@
 
           cardBody.appendChild(cardName);
           cardBody.appendChild(cardOccupation);
-          cardBody.appendChild(cardMajor);
+          //cardBody.appendChild(cardMajor);
           cardBody.appendChild(cardDescription);
 
           newCard.appendChild(cardImage);
@@ -205,7 +204,10 @@
           hallButton.type = "button";
 
           hallButton.onclick = function () {
-            updatePage(hallName);
+            // Uncomment code below once fully implemented:
+            // updatePage(hallName);
+
+            document.getElementById("dropdownMenuButton").innerHTML = hallName;
           };
 
           document.getElementById("hall-dropdown-menu").appendChild(hallButton);
@@ -215,8 +217,8 @@
       // updates pages, given a hall name
       function updatePage (hallName) {
         requestHallStaff(hallName);
+        // TO DO: clear old cards from page first
         loadCards();
-        document.getElementById("dropdownMenuButton").innerHTML = hallName;
       }
 
       // initial page load
