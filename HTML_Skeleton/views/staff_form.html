@@ -1,0 +1,92 @@
+<!--this is the page where RAs can create a personal profile-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Staff Form</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #CFB87C;">
+      <a>
+        <img class="img-fluid" src="../resources/img/Colorado_Buffaloes_logo.svg.png" width="50" height="50">
+      </a>
+      <h1>Staff's Personal Profile</h1>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+          <a class="nav-link" href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item active">
+          <a class="nav-link" href="staff-page.html">Staff</a>
+          </li>
+          <li class="nav-item active">
+          <a class="nav-link" href="staff_form.html">Profile</a>
+          </li>
+          <li class="nav-item active">
+          <a class="nav-link" href="resourcepage.html">Resources</a>
+          </li>
+          <li class="nav-item active">
+          <a class="nav-link" href="survey.html">Survey</a>
+          </li>
+          <li class="nav-item active">
+          <a class="nav-link" href="login.html">Log in </a>
+          </li>
+        </ul>
+      </div>
+      
+    </nav>
+    <div class="container">
+      <form>
+        <br>
+      </br>
+        <div class="row">
+        <div class="col">
+          <label class="font-weight-bold">Preferred First Name</label>
+          <input class="form-control">
+        </div>
+        <div class="col">
+          <label class="font-weight-bold">Gender Identity</label>
+          <input class="form-control">
+        </div>
+      </div>
+      <br>
+    </br>
+      <div class="row">
+      <div class="col">
+        <label class="font-weight-bold">Major</label>
+        <input class="form-control">
+      </div>
+      <div class="col">
+    </div>
+  </div>
+      <br>
+    </br>
+        <div>
+          <label class="font-weight-bold" for="text">Description</label>
+          <textarea class="form-control" id="text" rows="5" maxlength="300" placeholder="300 Characters Max"></textarea>
+        </div>
+        <br>
+      </br>
+        <label class="font-weight-bold" for="text">Profile Picture</label>
+        <div>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload Image" name="submit">
+      </div>
+      <br>
+    </br>
+      <div>
+        <button type="button" class="btn btn-outline-dark">Submit</button>
+      </div>
+      </form>
+    </div>
+  </body>
+</html>
