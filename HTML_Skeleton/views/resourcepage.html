@@ -11,9 +11,10 @@
 
     <link rel="stylesheet" href="../resources/css/general.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script type="text/javascript" src="../resources/js/resource_scripts.js"></script>
   </head>
 
-  <body>
+  <body onload="fillResources()">
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #CFB87C;"> <!-- gold:F7DC6F Blue:4498F9 -->
@@ -58,100 +59,16 @@
         </div>
       </div>
       <!-- title jumbotron -->
+    <!--<button type="button" class="btn btn-primary" onclick="fillResources()">Fill</button>-->
 
     <!-- Resource Cards for each website being used -->
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card" >
-          <img class="card-img-top" src="https://pbs.twimg.com/media/D7OHWHmWsAAuTW6.jpg"  alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">StarRes</h5>
-            <p class="card-text">StarRes contains student information. Use it to look up students when writing Incident Reports.</p>
-            <a href="https://hdsapps.colorado.edu/starrezweb" class="btn btn-primary">Go There</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card" >
-          <img class="card-img-top" src="https://www.stetson.edu/law/conferences/highered/home/media/maxient%20logo%202.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Internal Incident Report</h5>
-            <p class="card-text">Incident Reports are where you document policy violations or medical emergancies that happen in the resident halls. This internal link should not be shared outside of this page.</p>
-            <a href="https://cm.maxient.com/reportingform.php?UnivofColorado&layout_id=1" class="btn btn-primary">Go There</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card" >
-          <img class="card-img-top" src="https://static-assets.technologyevaluation.com/SoftwareImages/0/20/20EF04D66A6A29D3C6F4EC7A2AC18B8B1704BE87/logo.png" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Duty Rounds</h5>
-            <p class="card-text">On the Duty Rounds form log with your duty partner what happened during each duty night. This form varies by dorm.</p>
-            <a href="https://rareport.wufoo.com/forms/qoxs6r0pdko5i/" class="btn btn-primary">Go There</a>
-          </div>
-        </div>
-      </div>
+
+
+    <div id="container" class="container d-flex flex-wrap justify-content-center">
+      <!-- Dynamically create each card in javascript -->
     </div>
 
-    <div class="row">
 
-    </div>
-
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card" >
-          <img class="card-img-top" src="https://i0.wp.com/blog.roompact.com/wp-content/uploads/2019/07/397b5-roompact-highrez.png?resize=1024%2C213" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Roompact</h5>
-            <p class="card-text">Roompact is used for Roommate Agreements and for notifying your Hall Director on roommate conflicts.</p>
-            <a href="https://roompact.com/users/login" class="btn btn-primary">Go There</a>
-          </div>
-        </div>
-      </div>
-    <div class="col-sm-4">
-      <div class="card" >
-        <img class="card-img-top" src="https://www.appliedis.com/wp-content/uploads/2019/04/microsoftpowerapps-300x150.png" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">BuffChats</h5>
-          <p class="card-text">The BuffChats app provided through powerapps allows for the input and tracking of each resident BuffChat.</p>
-          <a href="https://apps.powerapps.com/play/3aed8dcf-4a6f-4393-928e-d8aff57873e3?source=portal&screenColor=rgba(81%2C%2092%2C%20107%2C%201)" class="btn btn-primary">Go There</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card" >
-        <img class="card-img-top" src="https://www.colorado.edu/umc/sites/default/files/block/cds_center.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">My CU Living</h5>
-          <p class="card-text">The My CU Living site is a hub for room and meal plan management. It is also used by the resident to check in overnight guests.</p>
-          <a href="living.colorado.edu" class="btn btn-primary">Go There</a>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="row">
-    <div class="col-sm-4">
-      <div class="card" >
-        <img class="card-img-top" src="https://img.over-blog-kiwi.com/2/41/57/84/20170618/ob_bb666d_whentowork-logo-blue.png" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">When to Work</h5>
-          <p class="card-text">When to work is the site used to organize the desk. Use this site to post your available hours, ask for trades, and communicate with your coworkers.</p>
-          <a href="https://whentowork.com/" class="btn btn-primary">Go There</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card" >
-        <img class="card-img-top" src="../resources/img/cu_600_300.png" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Community Center Site</h5>
-          <p class="card-text">The Community Center Site is used at the community center desk for the tracking of temporary keys and logging desk shifts.</p>
-          <a href="https://communitycenter.colorado.edu/" class="btn btn-primary">Go There</a>
-        </div>
-      </div>
-    </div>
-    </div>
     <!-- Resource Cards for each website being used -->
 
     <!-- Citation disclaimer -->
