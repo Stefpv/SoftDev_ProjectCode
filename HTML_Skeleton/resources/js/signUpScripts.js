@@ -11,7 +11,7 @@ function enableButton(firstName, lastName, residentAdvisor, hallDirecor, email, 
         var namesFilled = (firstName.value != "") && (lastName.value != "");
 
         // Check that either the RA of Hall Director options are checked off
-        var staffPositionSelected = (residentAdvisor.checked == true) || (hallDirecor.checked == true);
+        var staffPositionSelected = (residentAdvisor.checked) || (hallDirecor.checked);
 
         // Check that the email is valid
         var checkEmail = email.classList.contains("valid");
@@ -58,10 +58,20 @@ function startSignUp(){
 
     // Try to enable the button when one of the staff positions is selected
     residentAdvisor.onclick = function(){
+        residentAdvisor.checked = true;
+        hallDirector.checked = false;
+        document.getElementById("emailRequirement").innerHTML = "Must be your student email associated with the university";
+        email.placeholder = "example@colorado.edu";
+        document.getElementById("studentIDform").style.display = "block";
         enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     hallDirector.onclick = function(){
+        residentAdvisor.checked = false;
+        hallDirector.checked = true;
+        document.getElementById("emailRequirement").innerHTML = "";
+        document.getElementById("studentIDform").style.display = "none";
+        email.placeholder = "Enter email";
         enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
@@ -75,7 +85,7 @@ function startSignUp(){
     var specialCharacter = document.getElementById("specialChar");
     var match = document.getElementById("passwordsMatch");
 
-    // Check that the email is @colorado.edu
+    // Check that the email is @colorado.edu for RAs and any email for Hall Directors
     email.onfocus = function(){
         
         // Set the requirement mark to an 'x' if nothing has been typed
@@ -313,6 +323,36 @@ function resetForm(){
     submitBtn.classList.add("not-allowed");
 }
 
+// Changes the color of the "Log In" button when it is clicked
+function changeColor(buttonID){
+    var changeButton = document.getElementById(buttonID);
+    var changeButtonText = document.getElementById(buttonID + "Text");
+    // var logInBox = document.getElementById("login");
+
+    changeButtonText.setAttribute('style','color: black');
+    changeButton.classList.add("login-or-features-selected");
+    changeButton.classList.remove("show-login-or-features");
+
+    if(buttonID == "changeToLogIn"){
+        document.getElementById("changeToFeatures").classList.add("show-login-or-features");
+        document.getElementById("changeToFeatures").classList.remove("login-or-features-selected");
+
+        document.getElementById("login").style.display = "block";
+        document.getElementById("features").style.display = "none";
+
+        document.getElementById("changeToFeaturesText").setAttribute('style','color: white');
+    }
+    else{
+        document.getElementById("changeToLogIn").classList.add("show-login-or-features");
+        document.getElementById("changeToLogIn").classList.remove("login-or-features-selected");
+
+        document.getElementById("login").style.display = "none";
+        document.getElementById("features").style.display = "block";
+
+        document.getElementById("changeToLogInText").setAttribute('style','color: white');
+    }
+}
+
 /**  TO DO FOR SIGN UP
  * 1. Once all of the fields are filled, make sure that each input is saved in a variable.
  * 2. Using node.js, get the information from the the sign up form.
@@ -324,6 +364,3 @@ function resetForm(){
  */
 
 
-/**  TO DO FOR LOG IN
- * 
- */
