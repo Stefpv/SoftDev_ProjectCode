@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS residentAdvisors(
     student_email VARCHAR(60) NOT NULL, /* student email */
     residence_hall VARCHAR(30) NOT NULL, /* residence hall */
     floor_number SMALLINT NOT NULL, /* floor number in given residence hall */
-    has_staff_portal_account BOOLEAN NOT NULL /* indicates whether or not a staff member has created an account for our website
+    has_staff_portal_account BOOLEAN NOT NULL /* indicates whether or not a staff member has created an account for our website */
 ); 
 
 /* Contains the information on Hall Directors */
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS feedback(
     first_name VARCHAR(20) NOT NULL, /* filer's first name */
     last_name VARCHAR(20) NOT NULL, /* filer's last name */
     description TEXT, /* text that contains the description of a user's feedback */
-    classifications VARCHAR(20) ARRAY, /* dynamic array that contains the different categories of each given report */
+    classifications VARCHAR(20) ARRAY /* dynamic array that contains the different categories of each given report */
 );
 
 /* profile information */
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS resource_links(
     page_link TEXT,
     image_link TEXT,
     description TEXT
-)
+);
 
 /* INSERTING DATA INTO TABLES */
 
