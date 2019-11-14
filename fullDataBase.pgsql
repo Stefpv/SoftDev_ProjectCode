@@ -79,9 +79,9 @@ INSERT INTO residentAdvisors VALUES ('100987654','Alec','Raines','alec.raines@co
 INSERT INTO residentAdvisors VALUES ('106543219','Ayako','Spinks','ayako.spinks@colorado.edu','Darley North',7,FALSE);
 
 /* Insert 3 existing Hall Directors */ 
-INSERT INTO hallDirectors VALUES ('102030405','Donn','Gable','donn.gable@colorado.edu',{'Aden','Brackett','Cockerell','Crosman'},FALSE);
-INSERT INTO hallDirectors VALUES ('106663029','Joey','Wofford','joey.wofford@colorado.edu',{'Willard'},FALSE);
-INSERT INTO hallDirectors VALUES ('105033214','Eve','Faust','eve.faust@colorado.edu',{'Sewall'},FALSE);
+INSERT INTO hallDirectors VALUES ('102030405','Donn','Gable','donn.gable@colorado.edu','{"Aden","Brackett","Cockerell","Crosman"}',FALSE);
+INSERT INTO hallDirectors VALUES ('106663029','Joey','Wofford','joey.wofford@colorado.edu','{"Willard"}',FALSE);
+INSERT INTO hallDirectors VALUES ('105033214','Eve','Faust','eve.faust@colorado.edu','{"Sewall"}',FALSE);
 
 /* Insert the default links for the resoures page */
 INSERT INTO resource_links VALUES ('StarRez','https://hdsapps.colorado.edu/starrezweb','https://pbs.twimg.com/media/D7OHWHmWsAAuTW6.jpg','StarRes contains student information. Use it to look up students when writing Incident Reports.');
