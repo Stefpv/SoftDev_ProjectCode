@@ -24,6 +24,8 @@ function post(path, params, method='post') {
     }
   }
 
+  console.log("Request sent.");
+
   document.body.appendChild(form);
   form.submit();
 }

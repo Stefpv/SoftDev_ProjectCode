@@ -85,6 +85,8 @@
         </div>
       -->
 
+    <script src="../resources/js/server_scripts.js" type="text/javascript"></script>
+
     <script type="text/javascript">
       // the following data would be requested from server, depending on hall
       var staffArray = [
@@ -128,12 +130,46 @@
         "Williams Village North"
       ]
 
-      // TO DO: function that connects with server to pull staff info and update JSON entries
-      function requestHallStaff(hallName) {
-          // send request for hall staff info
-          // clear staff array
-          // update staff array with received info
-      };
+      // connects with server, pulling staff info for selected hall, and updates JSON entries
+      function updatePage(hallName) {
+
+        while (staffArray.length > 0) {
+          staffArray.pop();
+        }
+        console.log("Emptied staff array.")
+
+        // create request
+        var request = new XMLHttpRequest();
+
+        // update staff array with requested info
+        request.onload = function () {
+          var req_staff_array = request.response.staff;
+
+          for (i = 0; i < req_staff_array.length; i++) {
+            console.log(req_staff_array[i]);
+            staffArray.push(req_staff_array[i]);
+          }
+
+          removeCards();
+          loadCards();
+        }
+
+        request.open("POST", "/staff-page.html/select_hall");
+        request.setRequestHeader("Content-Type", "application/json");
+        request.responseType = 'json';
+        request.send(JSON.stringify({hall : hallName}));
+        // console.log("Requested staff info for " + hallName + ".");
+
+      }
+
+      function removeCards () {
+        var container = document.getElementById("card-container");
+
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+
+      }
 
       // loads cards of staff members into HTML DOM using information from the staffArray
       function loadCards () {
@@ -200,9 +236,7 @@
           hallButton.type = "button";
 
           hallButton.onclick = function () {
-            // Uncomment code below once fully implemented:
-            // updatePage(hallName);
-
+            updatePage(hallName);
             document.getElementById("dropdownMenuButton").innerHTML = hallName;
           };
 
@@ -210,18 +244,12 @@
         })(index);
       }
 
-      // updates pages, given a hall name
-      function updatePage (hallName) {
-        requestHallStaff(hallName);
-        // TO DO: clear old cards from page first
-        loadCards();
-      }
 
       // initial page load
         // load buttons once
         window.onload = loadHallButtons();
         // TO DO: change argument to user's dorm, to see their staff as default
-        window.onload = updatePage("Stearns East");
+        //window.onload = updatePage("Stearns East");
 
     </script>
 
