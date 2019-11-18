@@ -37,6 +37,11 @@ app.get('/login.html', function(req, res){
     res.sendFile('login.html', { root: view_dir } );
 });
 
+app.post('/login.html/verify', function(req, res){
+  var email = req.body.loginEmail;
+  var password = req.body.loginPassword;
+});
+
 app.get('/resourcepage.html', function(req, res){
     res.sendFile('resourcepage.html', { root: view_dir } );
 });
