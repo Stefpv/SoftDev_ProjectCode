@@ -37,9 +37,36 @@ app.get('/login.html', function(req, res){
     res.sendFile('login.html', { root: view_dir } );
 });
 
+// NOTE: storing user password in database is not secure. Might be better to hash password into database.
 app.post('/login.html/verify', function(req, res){
+  console.log("Login requested.");
+
   var email = req.body.loginEmail;
   var password = req.body.loginPassword;
+
+  var query = "SELECT user_password FROM profile_information WHERE user_email = \'" + email + "\';";
+  db.any(query)
+    .then(function (rows) {
+        if (password == rows[0].user_password) {
+          console.log("User has been verified for log in.");
+          /* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
+          Procedure found on StackOverflow, by (link to be placed.)
+           - generate random 258 bit token for user, and store in database
+           - send token and user_email to browser to be stored in sessionStorage, as client_token and user_email
+           - every page requires validation with server
+              - send client_token and user_email to server from sessionStorage
+              - look up user info on database using user_email ONLY
+              - compare client_token and token on database, using timing-safe comparison
+           - may also store time of first login and/or last activity, and require a new login based on time and/or inactivity
+          */
+        } else {
+          console.log("User is not verified for log in.");
+        }
+      })
+      .catch(function (err) {
+          // display error message
+          console.log('Could not process SQL query.', err);
+      })
 });
 
 app.get('/resourcepage.html', function(req, res){
