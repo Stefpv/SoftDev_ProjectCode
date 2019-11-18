@@ -90,17 +90,17 @@
     <script type="text/javascript">
       // the following data would be requested from server, depending on hall
       var staffArray = [
-          {username: "jack", name: "Jack", occupation: "Hall Director", description: "From Boston. Like swimming and international affairs."},
-          {username: "sandra", name: "Sandra", occupation: "Resident Advisor", description: "description"},
-          {username: "matt", name: "Matt", occupation: "Resident Advisor", description: "description"},
-          {username: "", name: "April", occupation: "Resident Advisor", description: "description"},
-          {username: "", name: "Lindsey", occupation: "Resident Advisor", description: "description"},
-          {username: "tony", name: "Tony", occupation: "Resident Advisor", description: "From New York. Majoring in physics and engineering."},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"}
+          {picture_link: "jack", name: "Jack", occupation: "Hall Director", description: "From Boston. Like swimming and international affairs."},
+          {picture_link: "sandra", name: "Sandra", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "matt", name: "Matt", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "", name: "April", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "", name: "Lindsey", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "tony", name: "Tony", occupation: "Resident Advisor", description: "From New York. Majoring in physics and engineering."},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"}
       ];
 
       const hallArray = [
@@ -133,20 +133,26 @@
       // connects with server, pulling staff info for selected hall, and updates JSON entries
       function updatePage(hallName) {
 
+        // empty staff array
         while (staffArray.length > 0) {
           staffArray.pop();
         }
-        console.log("Emptied staff array.")
 
-        // create request
+        // create new request
         var request = new XMLHttpRequest();
 
-        // update staff array with requested info
+        // update staff array and page once requested info is loaded
         request.onload = function () {
+          console.log("Server has sent response.");
+
           var req_staff_array = request.response.staff;
 
+          if (req_staff_array.length == 0) {
+            console.log("No staff info available.")
+            return;
+          }
+
           for (i = 0; i < req_staff_array.length; i++) {
-            console.log(req_staff_array[i]);
             staffArray.push(req_staff_array[i]);
           }
 
@@ -154,12 +160,14 @@
           loadCards();
         }
 
+        // configure request
         request.open("POST", "/staff-page.html/select_hall");
         request.setRequestHeader("Content-Type", "application/json");
         request.responseType = 'json';
-        request.send(JSON.stringify({hall : hallName}));
-        // console.log("Requested staff info for " + hallName + ".");
 
+        // send request to server
+        request.send(JSON.stringify({hall : hallName}));
+        console.log("Requesting info for " + hallName + ".");
       }
 
       function removeCards () {
@@ -185,7 +193,7 @@
           // give some flexibility for reasonably sized images
           var cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
-          cardImage.src = "../resources/img/staff-images/" + staffArray[index].username + ".jpg";
+          cardImage.src = "../resources/img/staff-images/" + staffArray[index].picture_link + ".jpg";
           cardImage.onerror = function () {
             this.onerror = null;
             this.src = "../resources/img/staff-images/blank_photo.png";
