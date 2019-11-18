@@ -57,7 +57,7 @@
         <!-- cards should populate here -->
       </div>
 
-      <!-- The following is the rough template of the staff card:
+      <!-- The following is the rough template of the staff card: -->
         <div class="card bg-dark text-white text-left" style="width: 20rem; border-color: #CFB87C">
 
           <img class="card-img-top" src="../resources/img/staff-images/blank_photo.png" alt="Card image cap">
@@ -65,16 +65,23 @@
           <div class="card-body">
             <h4 class="card-title"> Name </h4>
             <h5 class="card-subtitle" style="color: #CFB87C"> Job Title </h5>
-
+              <hr>
             <div class="row">
-              <div class="col">
-                <p class="card-text">Major: </p>
-              </div>
+                <div class="col">
+                  <p class="card-text">Major: </p>
+                </div>
+                <div class="col">
+                  <p class="card-tetx">Mathematics </p>
+                </div>
+            </div>
+            <div class="row">
               <div class="col">
                 <p class="card-text">Gender: </p>
               </div>
+              <div class="col">
+                <p class="card-text">Cisgender Male</p>
+              </div>
             </div>
-            <hr>
             <div class="row">
                 <div class="col">
                   <p class="card-text">A really long description that should contain enough words so that everyone can get to know about me.</p>
@@ -83,7 +90,6 @@
 
           </div>
         </div>
-      -->
 
     <script src="../resources/js/server_scripts.js" type="text/javascript"></script>
 
@@ -143,7 +149,7 @@
 
         // update staff array and page once requested info is loaded
         request.onload = function () {
-          console.log("Server has sent response.");
+          console.log("Server has responded with " + hallName + " info.");
 
           var req_staff_array = request.response.staff;
 
@@ -170,6 +176,7 @@
         console.log("Requesting info for " + hallName + ".");
       }
 
+      // remove cards of staff members, emptying the cards' container
       function removeCards () {
         var container = document.getElementById("card-container");
 
@@ -179,7 +186,8 @@
 
       }
 
-      // loads cards of staff members into HTML DOM using information from the staffArray
+      // loads cards of staff members into HTML DOM, using information from the staffArray
+      // in retrospect, integrating a view engine like PugJS would be more efficient.
       function loadCards () {
         var newCard;
 
@@ -190,7 +198,7 @@
           newCard.style.margin = "1rem";
           newCard.style.display = "inline-block";
 
-          // give some flexibility for reasonably sized images
+          // TO DO: give some flexibility for reasonably sized images
           var cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
           cardImage.src = "../resources/img/staff-images/" + staffArray[index].picture_link + ".jpg";
@@ -203,27 +211,59 @@
           var cardBody = document.createElement("div");
           cardBody.classList.add("card-body");
 
-          var cardName = document.createElement("h4");
-          cardName.innerHTML = staffArray[index].name;
-          cardName.classList.add("card-title");
+          // elements of the card body :
+            var cardName = document.createElement("h4");
+            cardName.innerHTML = staffArray[index].name;
+            cardName.classList.add("card-title");
 
-          var cardOccupation = document.createElement("h5");
-          cardOccupation.classList.add("card-subtitle");
-          cardOccupation.innerHTML = staffArray[index].occupation;
+            var cardOccupation = document.createElement("h5");
+            cardOccupation.classList.add("card-subtitle");
+            cardOccupation.innerHTML = staffArray[index].occupation;
 
-          // var cardMajor = document.createElement("p");
-          // cardMajor.classList.add("card-text");
-          // cardMajor.innerHTML = "TEST Major";
+            var rowMajor = document.createElement("div");
+            var rowGender = document.createElement("div");
+            var rowDescription = document.createElement("div");
 
-          // TO DO: make sure card text is readable up to 300 chararacters
-          var cardDescription = document.createElement("p");
-          cardDescription.classList.add("card-text");
-          cardDescription.innerHTML = staffArray[index].description;
+            var colMajor = document.createElement("div");
+            var colGender = document.createElement("div");
+            var colDescription = document.createElement("div");
+
+            rowMajor.classList.add("row");
+            rowGender.classList.add("row");
+            rowDescription.classList.add("row");
+
+            colMajor.classList.add("col");
+            colGender.classList.add("col");
+            colDescription.classList.add("col");
+
+            var cardMajor = document.createElement("p");
+            cardMajor.classList.add("card-text");
+            cardMajor.innerHTML = "Major: " + staffArray[index].major;
+
+            var cardGender = document.createElement("p");
+            cardGender.classList.add("card-text");
+            cardGender.innerHTML = "Gender: " + staffArray[index].gender;
+
+            // TO DO: make sure card text is readable up to 300 chararacters
+            var cardDescription = document.createElement("p");
+            cardDescription.classList.add("card-text");
+            cardDescription.innerHTML = staffArray[index].description;
+
+            colMajor.appendChild(cardMajor);
+            rowMajor.appendChild(colMajor);
+
+            colGender.appendChild(cardGender);
+            rowGender.appendChild(colGender);
+
+            colDescription.appendChild(cardDescription);
+            rowDescription.appendChild(colDescription);
 
           cardBody.appendChild(cardName);
           cardBody.appendChild(cardOccupation);
-          //cardBody.appendChild(cardMajor);
-          cardBody.appendChild(cardDescription);
+
+          cardBody.appendChild(rowMajor);
+          cardBody.appendChild(rowGender)
+          cardBody.appendChild(rowDescription);
 
           newCard.appendChild(cardImage);
           newCard.appendChild(cardBody);
