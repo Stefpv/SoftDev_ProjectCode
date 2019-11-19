@@ -38,6 +38,8 @@ app.get('/login.html', function(req, res){
 });
 
 // NOTE: storing user password in database is not secure. Might be better to hash password into database.
+
+// verifies login request
 app.post('/login.html/verify', function(req, res){
   console.log("Login requested.");
 
@@ -67,6 +69,72 @@ app.post('/login.html/verify', function(req, res){
           // display error message
           console.log('Could not process SQL query.', err);
       })
+});
+
+// process sign up request
+app.post('/login.html/signup', function(req, res){
+  console.log("Signup requested.");
+
+	var staff_position = req.body.staffPositions;
+	var first_name = req.body.firstName;
+	var last_name = req.body.lastName;
+  var email = req.body.userEmail;
+	var user_id = req.body.studentID;
+  var password = req.body.loginPassword;
+
+	var table = '';
+	var table_key = '';
+
+	var isResidentAdvisor = (staff_position == 'Resident Advisor');
+
+	// variables used to change the query depending on user's position.
+	if (isResidentAdvisor) {
+		table = 'residentAdvisors';
+		table_key = 'student_ID';
+		table_email = 'student_email';
+	} else {
+		table = 'hallDirectors';
+		table_key = 'staff_ID';
+		table_email = 'staff_email';
+	}
+
+	var query = "SELECT first_name, last_name, " + table_email + " FROM " + table + " WHERE " + table_key + " = \'" + user_id + "\';";
+	console.log(query);
+
+  db.any(query)
+    .then(function (rows) {
+				var isSuccessful = true;
+
+				// check if name matches record
+        if (rows[0].first_name != first_name || rows[0].last_name != last_name) {
+					isSuccessful = false;
+				}
+
+				// check if email matches record
+				if (isResidentAdvisor) {
+					if (rows[0].student_email != email) {
+						isSuccessful = false;
+					}
+				} else {
+					if (rows[0].staff_email != email) {
+						isSuccessful = false;
+					}
+				}
+
+				// TO DO: add user to profile_information database, or send alert message if sign up failde.
+				if (isSuccessful) {
+					console.log("Sign up info verified.");
+				} else {
+					console.log("Sign up failed!");
+				}
+
+      })
+      .catch(function (err) {
+          // display error message
+          console.log('Could not process SQL query.', err);
+      })
+
+
 });
 
 app.get('/resourcepage.html', function(req, res){

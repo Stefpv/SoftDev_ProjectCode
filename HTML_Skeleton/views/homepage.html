@@ -109,96 +109,97 @@
     </div>
 
     <!-- Modal Form -->
-    <div id="signUpModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Create Your Account</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="resetForm()">&times;</button>
-          </div>
-          <div class="modal-body">
+    <form action="/login.html/signup" method="post">      
+      <div id="signUpModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Create Your Account</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="resetForm()">&times;</button>
+            </div>
+            <div class="modal-body">
 
-              <!-- First & Last Name -->
-              <h6>Name</h6>
-              <div class="form-row">
-                <div class="form-group col">
-                  <input type="text" name="firstName" class="form-control form-control-sm" id="firstName" placeholder="First Name" required>
-                </div>
-                <div class="form-group col">
-                    <input type="text" name="lastName" class="form-control form-control-sm" id="lastName" placeholder="Last Name" required>
-                </div>
-              </div>
-
-              <!-- Staff Position -->
-              <h6>Staff Position</h6>
-              <div class="form-row">
-                <div class="form-group col">
-                  <div class="form-check form-check-inline">
-                    <input type="radio" class="form-check-input" name="staffPositions" id="residentAdvisor" value="Resident Advisor" checked>
-                    <label class="form-check-label" for="residentAdvisor" style="font-size: 14px">Resident Advisor</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="staffPositions" id="hallDirector" value="Hall Director">
-                      <label class="form-check-label" for="hallDirector" style="font-size: 14px">Hall Director</label>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Email -->
-              <h6>Email</h6>
-              <div class="form-row">
-                <div class="form-group col">
-                  <input type="email" name="userEmail" class="form-control form-control-sm" id="staffEmail" placeholder="example@colorado.edu" required aria-describedby="emailRequirement">
-                  <small id="emailRequirement" class="form-text text-muted">Must be your student email associated with the university</small>
-                </div>
-                <div class="form-group col-md-1">
-                  <small id="validEmail"></small>
-                </div>
-              </div>
-
-              <!-- Student ID -->
-              <div id="studentIDform">
-                <h6>Student ID</h6>
+                <!-- First & Last Name -->
+                <h6>Name</h6>
                 <div class="form-row">
                   <div class="form-group col">
-                    <input type="text" id="studentID" name="studentID" class="form form-control form-control-sm" maxlength="9" pattern="[0-9]{9}" placeholder="Your 9 Digit Student ID" required>
+                    <input type="text" name="firstName" class="form-control form-control-sm" id="firstName" placeholder="First Name" required>
+                  </div>
+                  <div class="form-group col">
+                      <input type="text" name="lastName" class="form-control form-control-sm" id="lastName" placeholder="Last Name" required>
+                  </div>
+                </div>
+
+                <!-- Staff Position -->
+                <h6>Staff Position</h6>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <div class="form-check form-check-inline">
+                      <input type="radio" class="form-check-input" name="staffPositions" id="residentAdvisor" value="Resident Advisor" checked>
+                      <label class="form-check-label" for="residentAdvisor" style="font-size: 14px">Resident Advisor</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="staffPositions" id="hallDirector" value="Hall Director">
+                        <label class="form-check-label" for="hallDirector" style="font-size: 14px">Hall Director</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <h6>Email</h6>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <input type="email" name="userEmail" class="form-control form-control-sm" id="staffEmail" placeholder="example@colorado.edu" required aria-describedby="emailRequirement">
+                    <small id="emailRequirement" class="form-text text-muted">Must be your student email associated with the university</small>
                   </div>
                   <div class="form-group col-md-1">
-                    <small id="validStudentID"></small>
+                    <small id="validEmail"></small>
                   </div>
                 </div>
-              </div>
 
-              <!-- Password -->
-              <h6>Password</h6>
-              <div class="form-row">
-                <div class="form-group col">
-                  <input type="password" name="password" class="form-control form-control-sm" id="userPassword" placeholder="Enter Password" required>
+                <!-- Student ID -->
+                <div id="studentIDform">
+                  <h6>Student ID</h6>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <input type="text" id="studentID" name="studentID" class="form form-control form-control-sm" maxlength="9" pattern="[0-9]{9}" placeholder="Your 9 Digit Student ID" required>
+                    </div>
+                    <div class="form-group col-md-1">
+                      <small id="validStudentID"></small>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col">
-                  <input type="password" name="confirmPassword" class="form-control form-control-sm" id="confirmPassword" placeholder="Confirm Password" required>
+
+                <!-- Password -->
+                <h6>Password</h6>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <input type="password" name="password" class="form-control form-control-sm" id="userPassword" placeholder="Enter Password" required>
+                  </div>
+                  <div class="form-group col">
+                    <input type="password" name="confirmPassword" class="form-control form-control-sm" id="confirmPassword" placeholder="Confirm Password" required>
+                  </div>
+                  <div class="form-group col-md-1">
+                    <small id="passwordsMatch"></small>
+                  </div>
                 </div>
-                <div class="form-group col-md-1">
-                  <small id="passwordsMatch"></small>
-                </div>
-              </div>
-              <p style="text-align: center;">
-                <small >Password must contain the following:</small> <br>
-                <small id="minimum">At least 12 characters</small> <br>
-                <small id="lowercase"> At least one lowercase letter</small> <br>
-                <small id="uppercase">At least one uppercase letter</small> <br>
-                <small id="number">At least one number</small> <br>
-                <small id="specialChar">At least one special (non-alphanumeric) character</small>
-              </p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Close</button>
-            <button class="btn btn-primary not-allowed" id="mySubmitButton" disabled>Submit</button>
+                <p style="text-align: center;">
+                  <small >Password must contain the following:</small> <br>
+                  <small id="minimum">At least 12 characters</small> <br>
+                  <small id="lowercase"> At least one lowercase letter</small> <br>
+                  <small id="uppercase">At least one uppercase letter</small> <br>
+                  <small id="number">At least one number</small> <br>
+                  <small id="specialChar">At least one special (non-alphanumeric) character</small>
+                </p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Close</button>
+              <button class="btn btn-primary not-allowed" id="mySubmitButton" disabled>Submit</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
+    </form>
     <!-- Footer -->
     <footer class="page-footer font-small blue" style="margin-top: 5px;">
       <div class="footer-copyright text-center py-3">© 2019 Copyright:
