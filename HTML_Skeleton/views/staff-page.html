@@ -62,16 +62,23 @@
           <div class="card-body">
             <h4 class="card-title"> Name </h4>
             <h5 class="card-subtitle" style="color: #CFB87C"> Job Title </h5>
-
+              <hr>
             <div class="row">
-              <div class="col">
-                <p class="card-text">Major: </p>
-              </div>
+                <div class="col">
+                  <p class="card-text">Major: </p>
+                </div>
+                <div class="col">
+                  <p class="card-tetx">Mathematics </p>
+                </div>
+            </div>
+            <div class="row">
               <div class="col">
                 <p class="card-text">Gender: </p>
               </div>
+              <div class="col">
+                <p class="card-text">Cisgender Male</p>
+              </div>
             </div>
-            <hr>
             <div class="row">
                 <div class="col">
                   <p class="card-text">A really long description that should contain enough words so that everyone can get to know about me.</p>
@@ -82,20 +89,22 @@
         </div>
       -->
 
+    <script src="../resources/js/server_scripts.js" type="text/javascript"></script>
+
     <script type="text/javascript">
       // the following data would be requested from server, depending on hall
       var staffArray = [
-          {username: "jack", name: "Jack", occupation: "Hall Director", description: "From Boston. Like swimming and international affairs."},
-          {username: "sandra", name: "Sandra", occupation: "Resident Advisor", description: "description"},
-          {username: "matt", name: "Matt", occupation: "Resident Advisor", description: "description"},
-          {username: "", name: "April", occupation: "Resident Advisor", description: "description"},
-          {username: "", name: "Lindsey", occupation: "Resident Advisor", description: "description"},
-          {username: "tony", name: "Tony", occupation: "Resident Advisor", description: "From New York. Majoring in physics and engineering."},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"},
-          {username: "", name: "Name", occupation: "Occupation", description: "Description"}
+          {picture_link: "jack", name: "Jack", occupation: "Hall Director", description: "From Boston. Like swimming and international affairs."},
+          {picture_link: "sandra", name: "Sandra", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "matt", name: "Matt", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "", name: "April", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "", name: "Lindsey", occupation: "Resident Advisor", description: "description"},
+          {picture_link: "tony", name: "Tony", occupation: "Resident Advisor", description: "From New York. Majoring in physics and engineering."},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"},
+          {picture_link: "", name: "Name", occupation: "Occupation", description: "Description"}
       ];
 
       const hallArray = [
@@ -125,14 +134,58 @@
         "Williams Village North"
       ]
 
-      // TO DO: function that connects with server to pull staff info and update JSON entries
-      function requestHallStaff(hallName) {
-          // send request for hall staff info
-          // clear staff array
-          // update staff array with received info
-      };
+      // connects with server, pulling staff info for selected hall, and updates JSON entries
+      function updatePage(hallName) {
 
-      // loads cards of staff members into HTML DOM using information from the staffArray
+        // empty staff array
+        while (staffArray.length > 0) {
+          staffArray.pop();
+        }
+
+        // create new request
+        var request = new XMLHttpRequest();
+
+        // update staff array and page once requested info is loaded
+        request.onload = function () {
+          console.log("Server has responded with " + hallName + " info.");
+
+          var req_staff_array = request.response.staff;
+
+          if (req_staff_array.length == 0) {
+            console.log("No staff info available.")
+            return;
+          }
+
+          for (i = 0; i < req_staff_array.length; i++) {
+            staffArray.push(req_staff_array[i]);
+          }
+
+          removeCards();
+          loadCards();
+        }
+
+        // configure request
+        request.open("POST", "/staff-page.html/select_hall");
+        request.setRequestHeader("Content-Type", "application/json");
+        request.responseType = 'json';
+
+        // send request to server
+        request.send(JSON.stringify({hall : hallName}));
+        console.log("Requesting info for " + hallName + ".");
+      }
+
+      // remove cards of staff members, emptying the cards' container
+      function removeCards () {
+        var container = document.getElementById("card-container");
+
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+
+      }
+
+      // loads cards of staff members into HTML DOM, using information from the staffArray
+      // in retrospect, integrating a view engine like PugJS would be more efficient.
       function loadCards () {
         var newCard;
 
@@ -143,10 +196,10 @@
           newCard.style.margin = "1rem";
           newCard.style.display = "inline-block";
 
-          // give some flexibility for reasonably sized images
+          // TO DO: give some flexibility for reasonably sized images
           var cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
-          cardImage.src = "../resources/img/staff-images/" + staffArray[index].username + ".jpg";
+          cardImage.src = "../resources/img/staff-images/" + staffArray[index].picture_link + ".jpg";
           cardImage.onerror = function () {
             this.onerror = null;
             this.src = "../resources/img/staff-images/blank_photo.png";
@@ -156,27 +209,59 @@
           var cardBody = document.createElement("div");
           cardBody.classList.add("card-body");
 
-          var cardName = document.createElement("h4");
-          cardName.innerHTML = staffArray[index].name;
-          cardName.classList.add("card-title");
+          // elements of the card body :
+            var cardName = document.createElement("h4");
+            cardName.innerHTML = staffArray[index].name;
+            cardName.classList.add("card-title");
 
-          var cardOccupation = document.createElement("h5");
-          cardOccupation.classList.add("card-subtitle");
-          cardOccupation.innerHTML = staffArray[index].occupation;
+            var cardOccupation = document.createElement("h5");
+            cardOccupation.classList.add("card-subtitle");
+            cardOccupation.innerHTML = staffArray[index].occupation;
 
-          // var cardMajor = document.createElement("p");
-          // cardMajor.classList.add("card-text");
-          // cardMajor.innerHTML = "TEST Major";
+            var rowMajor = document.createElement("div");
+            var rowGender = document.createElement("div");
+            var rowDescription = document.createElement("div");
 
-          // TO DO: make sure card text is readable up to 300 chararacters
-          var cardDescription = document.createElement("p");
-          cardDescription.classList.add("card-text");
-          cardDescription.innerHTML = staffArray[index].description;
+            var colMajor = document.createElement("div");
+            var colGender = document.createElement("div");
+            var colDescription = document.createElement("div");
+
+            rowMajor.classList.add("row");
+            rowGender.classList.add("row");
+            rowDescription.classList.add("row");
+
+            colMajor.classList.add("col");
+            colGender.classList.add("col");
+            colDescription.classList.add("col");
+
+            var cardMajor = document.createElement("p");
+            cardMajor.classList.add("card-text");
+            cardMajor.innerHTML = "Major: " + staffArray[index].major;
+
+            var cardGender = document.createElement("p");
+            cardGender.classList.add("card-text");
+            cardGender.innerHTML = "Gender: " + staffArray[index].gender;
+
+            // TO DO: make sure card text is readable up to 300 chararacters
+            var cardDescription = document.createElement("p");
+            cardDescription.classList.add("card-text");
+            cardDescription.innerHTML = staffArray[index].description;
+
+            colMajor.appendChild(cardMajor);
+            rowMajor.appendChild(colMajor);
+
+            colGender.appendChild(cardGender);
+            rowGender.appendChild(colGender);
+
+            colDescription.appendChild(cardDescription);
+            rowDescription.appendChild(colDescription);
 
           cardBody.appendChild(cardName);
           cardBody.appendChild(cardOccupation);
-          //cardBody.appendChild(cardMajor);
-          cardBody.appendChild(cardDescription);
+
+          cardBody.appendChild(rowMajor);
+          cardBody.appendChild(rowGender)
+          cardBody.appendChild(rowDescription);
 
           newCard.appendChild(cardImage);
           newCard.appendChild(cardBody);
@@ -197,9 +282,7 @@
           hallButton.type = "button";
 
           hallButton.onclick = function () {
-            // Uncomment code below once fully implemented:
-            // updatePage(hallName);
-
+            updatePage(hallName);
             document.getElementById("dropdownMenuButton").innerHTML = hallName;
           };
 
@@ -207,18 +290,12 @@
         })(index);
       }
 
-      // updates pages, given a hall name
-      function updatePage (hallName) {
-        requestHallStaff(hallName);
-        // TO DO: clear old cards from page first
-        loadCards();
-      }
 
       // initial page load
         // load buttons once
         window.onload = loadHallButtons();
         // TO DO: change argument to user's dorm, to see their staff as default
-        window.onload = updatePage("Stearns East");
+        //window.onload = updatePage("Stearns East");
 
     </script>
 
