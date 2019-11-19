@@ -3,7 +3,7 @@
  */
 
 // Enables the button if all fields of the form are filled
-function enableButton(firstName, lastName, residentAdvisor, hallDirecor, email, studentID, minimumLength, lowercase, uppercase, number, specChar, psswdsMatch){
+function enableButton(firstName, lastName, residentAdvisor, hallDirecor, email, userID, minimumLength, lowercase, uppercase, number, specChar, psswdsMatch){
     // Check that all fields are filled
     console.log("inside enable button");
 
@@ -17,7 +17,7 @@ function enableButton(firstName, lastName, residentAdvisor, hallDirecor, email, 
         var checkEmail = email.classList.contains("valid");
 
         // Check that the studnet ID is valid
-        var checkID = studentID.classList.contains("valid");
+        var checkID = userID.classList.contains("valid");
         
         // Check that the password requirements are all valid
         var psswdRequirementsMet = minimumLength.classList.contains("valid-password") && lowercase.classList.contains("valid-password") && uppercase.classList.contains("valid-password") && number.classList.contains("valid-password") && specChar.classList.contains("valid-password");
@@ -41,43 +41,51 @@ function startSignUp(){
     var residentAdvisor = document.getElementById("residentAdvisor");
     var hallDirector = document.getElementById("hallDirector");
     var email = document.getElementById("staffEmail");
-    var studentID = document.getElementById("studentID");
+    var userID = document.getElementById("userID");
     var password = document.getElementById("userPassword");
     var confirmPassword = document.getElementById("confirmPassword");
 
     // Try to enable the button when the first name and last name fields are being completed
     firstName.onblur = function(){
         // enable the button if all fields are valid
-        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     lastName.onblur = function(){
         // enable the button if all fields are valid
-        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     // Try to enable the button when one of the staff positions is selected
     residentAdvisor.onclick = function(){
         residentAdvisor.checked = true;
         hallDirector.checked = false;
+
+        // Direct the labeling/content to resident advisors
         document.getElementById("emailRequirement").innerHTML = "Must be your student email associated with the university";
-        email.placeholder = "example@colorado.edu";
-        document.getElementById("studentIDform").style.display = "block";
-        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+        document.getElementById("idHeader").innerHTML = "Student ID";
+        userID.placeholder = "Your 9 Digit Student ID";
+
+        // Try to enable the submit button
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     hallDirector.onclick = function(){
         residentAdvisor.checked = false;
         hallDirector.checked = true;
-        document.getElementById("emailRequirement").innerHTML = "";
-        document.getElementById("studentIDform").style.display = "none";
-        email.placeholder = "Enter email";
-        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+
+        // Direct the labeling/content to hall directors
+        document.getElementById("emailRequirement").innerHTML = "Must be your staff email associated with the university";
+        document.getElementById("idHeader").innerHTML = "Staff ID";
+        userID.placeholder = "Your 9 Digit Staff ID";
+
+        // Try to enable the submit button
+        enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
     }
 
     // Retrieve requirement fields
     var emailValid = document.getElementById("validEmail");
-    var studentIDvalid = document.getElementById("validStudentID");
+    var userIDvalid = document.getElementById("validID");
     var minimum = document.getElementById("minimum");
     var lowerLetter = document.getElementById("lowercase");
     var upperLetter = document.getElementById("uppercase");
@@ -96,8 +104,8 @@ function startSignUp(){
         email.onkeyup = function(){
 
             // Create regular expressions to check that the email is @colorado.edu
-            var studentEmail1 = /^[a-z]+\.[a-z]+@colorado.edu$/g;
-            var studentEmail2 = /^[a-z]{4}[0-9]{4}@colorado.edu$/g;
+            var studentEmail1 = /^[a-z]+\.[a-z]+@colorado\.edu$/g;
+            var studentEmail2 = /^[a-z]{4}[0-9]{4}@colorado\.edu$/g;
 
             // Validate the email
             if(email.value.match(studentEmail1) || email.value.match(studentEmail2)){
@@ -110,7 +118,7 @@ function startSignUp(){
             }
 
             // enable the button if all fields are valid
-            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }
     }
 
@@ -122,37 +130,37 @@ function startSignUp(){
     }
 
     // Check that the student ID is correct format
-    studentID.onfocus = function(){
+    userID.onfocus = function(){
         
         // Set the requirement mark as wrong if nothing has been typed
-        if(studentID.value == ""){
-            studentIDvalid.classList.add("invalid");
+        if(userID.value == ""){
+            userIDvalid.classList.add("invalid");
         }
 
-        studentID.onkeyup = function(){
+        userID.onkeyup = function(){
             
             // Regular expression to check that the ID is a 9 digit number
             var nineDigitNum = /[0-9]{9}/g;
 
             // Validate the ID
-            if(studentID.value.match(nineDigitNum)){
-                studentIDvalid.classList.add("valid");
-                studentIDvalid.classList.remove("invalid");
+            if(userID.value.match(nineDigitNum)){
+                userIDvalid.classList.add("valid");
+                userIDvalid.classList.remove("invalid");
             }
             else{
-                studentIDvalid.classList.add("invalid");
-                studentIDvalid.classList.remove("valid");
+                userIDvalid.classList.add("invalid");
+                userIDvalid.classList.remove("valid");
             }
 
             // enable the button if all fields are valid
-            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }
     }
 
     // Reset the ID indicator if the ID field is emtpy
-    studentID.onblur = function(){
-        if(studentID.value == ""){
-            studentIDvalid.classList.remove("valid","invalid");
+    userID.onblur = function(){
+        if(userID.value == ""){
+            userIDvalid.classList.remove("valid","invalid");
         }
     }
 
@@ -222,7 +230,7 @@ function startSignUp(){
             }
 
             // enable the button if all fields are valid
-            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }        
     }
 
@@ -254,7 +262,7 @@ function startSignUp(){
             }
 
             // enable the button if all fields are valid
-            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,studentIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
+            enableButton(firstName,lastName,residentAdvisor,hallDirector,emailValid,userIDvalid,minimum,lowerLetter,upperLetter,digit,specialCharacter,match);
         }
     }
 
@@ -275,25 +283,30 @@ function resetForm(){
     var residentAdvisor = document.getElementById("residentAdvisor");
     var hallDirector = document.getElementById("hallDirector");
     var email = document.getElementById("staffEmail");
-    var studentID = document.getElementById("studentID");
+    var userID = document.getElementById("userID");
     var password = document.getElementById("userPassword");
     var confirmPassword = document.getElementById("confirmPassword");
 
     // Reset the radio for the staff position
-    residentAdvisor.checked = false;
+    residentAdvisor.checked = true;
     hallDirector.checked = false;
+
+    // Resest the placeholders and title for the email & ID fields
+    document.getElementById("emailRequirement").innerHTML = "Must be your student email associated with the university";
+    document.getElementById("idHeader").innerHTML = "Student ID";
+    userID.placeholder = "Your 9 Digit Student ID";
 
     // Reset all inputs
     firstName.value = "";
     lastName.value = "";
     email.value = "";
-    studentID.value = "";
+    userID.value = "";
     password.value = "";
     confirmPassword.value = "";
 
     // Retrieve requirement fields
     var emailValid = document.getElementById("validEmail");
-    var IDvalid = document.getElementById("validStudentID");
+    var IDvalid = document.getElementById("validID");
     var minimum = document.getElementById("minimum");
     var lowerLetter = document.getElementById("lowercase");
     var upperLetter = document.getElementById("uppercase");
@@ -354,6 +367,23 @@ function changeColor(buttonID){
 }
 
 /**  TO DO FOR SIGN UP
+ *
+ * Have different input fields in the HTML Page for the following:
+ * 
+ *      Both:
+ *          First name
+ *          Last name
+ *          Staff Position
+ *          Password & Confirm Password
+ * 
+ *      RAs:
+ *          student email (jabo9820@colorado.edu OR jacob.bonner@colorado.edu)
+ *          student ID (9 digits)
+ * 
+ *      Hall Directors:
+ *          staff email (first.last@colorado.edu)
+ *          staff ID (assuming 9 digits)
+ * 
  * 1. Once all of the fields are filled, make sure that each input is saved in a variable.
  * 2. Using node.js, get the information from the the sign up form.
  * 3. Run a query on the existing university data base to see if the information entered matches an existing staff member.
@@ -361,6 +391,17 @@ function changeColor(buttonID){
  *          (our website), or refresh the page and have them login.
  *      3b. If the user does not exist, start with a message saying that they may have entered some of their information incorrectly, provide information with who they
  *          can contact for issues, and ask them to try again. If they continue to have issues signing up, they are probably not an RA.
+ * 
+ * 
+ ***************** QUERIES ****************
+ *       
+ * SELECT ____ WHERE (studentID = student_ID) AND (firstName = first_name) AND (lastName = last_name) AND (studentEmail = student_email);
+ * SELECT ____ WHERE (staffID = staff_ID) AND (firstName = first_name) AND (lastName = last_name) AND (staffEmail = staff_email);
+ * 
+ * SELECT ____ WHERE (logInPassword = user_password) AND (logInEmail = user_email);
+ * 
+ * 
+ * 
  */
 
 
