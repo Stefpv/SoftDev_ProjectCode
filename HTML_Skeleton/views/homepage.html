@@ -34,66 +34,68 @@
               </div>
             
               <!-- Login form -->
-              <div id="logInBox" class="login-box">
-                <div id="login" style="visibility: visible;">
-                  <div class="form-row">
-                    <div class="form-group col-md-3"></div>
-                    <div class="form-group col">
-                      <h5>Email</h5>
-                      <input type="email" id="loginEmail" class="form form-control" name="loginEmail" placeholder="Enter email address">
+              <form action="/login.html/verify" method="post"></form>
+                <div id="logInBox" class="login-box">
+                  <div id="login" style="visibility: visible;">
+                    <div class="form-row">
+                      <div class="form-group col-md-3"></div>
+                      <div class="form-group col">
+                        <h5>Email</h5>
+                        <input type="email" id="loginEmail" class="form form-control" name="loginEmail" placeholder="Enter email address">
+                      </div>
+                      <div class="form-group col-md-3"></div>
                     </div>
-                    <div class="form-group col-md-3"></div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-3"></div>
-                    <div class="form-group col">
-                      <h5>Password</h5>
-                      <input type="password" id="loginPassword" class="form form-control" name="loginPassword" placeholder="Enter password">
-                      <label>
-                        <input type="checkbox" checked="checked" name="remember" style="margin-top:15px; margin-bottom: 10px;"> Remember me
-                      </label>
-                      <button type="submit" class="login-button btn-block">Log In</button>
+                    <div class="form-row">
+                      <div class="form-group col-md-3"></div>
+                      <div class="form-group col">
+                        <h5>Password</h5>
+                        <input type="password" id="loginPassword" class="form form-control" name="loginPassword" placeholder="Enter password">
+                        <label>
+                          <input type="checkbox" checked="checked" name="remember" style="margin-top:15px; margin-bottom: 10px;"> Remember me
+                        </label>
+                        <button type="submit" class="login-button btn-block">Log In</button>
+                      </div>
+                      <div class="form-group col-md-3"></div>
                     </div>
-                    <div class="form-group col-md-3"></div>
-                  </div>
-            
-                  <!-- Black line separating log in and sign up-->
-                  <div class="form-row">
-                    <div class="form-group col-md-3"></div>
-                    <div class="form-group col">
-                      <hr class="login">
+              
+                    <!-- Black line separating log in and sign up-->
+                    <div class="form-row">
+                      <div class="form-group col-md-3"></div>
+                      <div class="form-group col">
+                        <hr class="login">
+                      </div>
+                      <div class="form-group col-md-3"></div>
                     </div>
-                    <div class="form-group col-md-3"></div>
-                  </div>
-                  
-                  <!-- Button that shows modal-->
-                  <div class="form-row">
-                    <div class="form-group col-md-3"></div>
-                    <div class="form-group col">
-                      <a href="#signUpModal" class="create-button btn-block" data-toggle="modal" data-backdrop="static" onclick="startSignUp()">Sign Up</a>
+                    
+                    <!-- Button that shows modal-->
+                    <div class="form-row">
+                      <div class="form-group col-md-3"></div>
+                      <div class="form-group col">
+                        <a href="#signUpModal" class="create-button btn-block" data-toggle="modal" data-backdrop="static" onclick="startSignUp()">Sign Up</a>
+                      </div>
+                      <div class="form-group col-md-3"></div>
                     </div>
-                    <div class="form-group col-md-3"></div>
                   </div>
-                </div>
 
-                <!-- Contains a description of the current features of our website-->
-                <div id="features" style="display: none;">
-                  <h4 style="text-align: center;">Welcome to the Resident Hall Staff Portal!</h4> <br>
-                  <h6 style="text-align: center;">Here are the current features available for staff members:</h6>
-                  <br>
-                  <div class="form-row">
+                  <!-- Contains a description of the current features of our website-->
+                  <div id="features" style="display: none;">
+                    <h4 style="text-align: center;">Welcome to the Resident Hall Staff Portal!</h4> <br>
+                    <h6 style="text-align: center;">Here are the current features available for staff members:</h6>
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group col-md-2"></div>
+                      <div class="form-group col">
+                        <ul style="list-style-type: circle;">
+                          <li>Staff Profile</li>
+                          <li>Links to Resident Hall Staff Services</li>
+                          <li>Ways to view other profiles and get to know fellow staff members</li>
+                          <li>Form for giving feedback or reporting issues</li>
+                        </ul></div>
                       <div class="form-group col-md-2"></div>
-                    <div class="form-group col">
-                      <ul style="list-style-type: circle;">
-                        <li>Staff Profile</li>
-                        <li>Links to Resident Hall Staff Services</li>
-                        <li>Ways to view other profiles and get to know fellow staff members</li>
-                        <li>Form for giving feedback or reporting issues</li>
-                      </ul></div>
-                    <div class="form-group col-md-2"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
             <div class="col">
                 <!-- <img class="rounded" width="500px" hight="400px" src="../resources/img/CUBoulderPicture.jpg" alt="Campus Map"> -->
@@ -155,14 +157,14 @@
               </div> 
 
               <!-- Student ID -->
-              <div id="studentIDform">
-                <h6>Student ID</h6>
+              <div id="userIDform">
+                <h6 id="idHeader">Student ID</h6>
                 <div class="form-row"> 
                   <div class="form-group col">
-                    <input type="text" id="studentID" name="studentID" class="form form-control form-control-sm" maxlength="9" pattern="[0-9]{9}" placeholder="Your 9 Digit Student ID" required>
+                    <input type="text" id="userID" name="userID" class="form form-control form-control-sm" maxlength="9" pattern="[0-9]{9}" placeholder="Your 9 Digit Student ID" required>
                   </div>
                   <div class="form-group col-md-1">
-                    <small id="validStudentID"></small>
+                    <small id="validID"></small>
                   </div>
                 </div>
               </div>
@@ -213,10 +215,3 @@
   </body>
 
 </html>
-
-
-<!-- TO DO
-      1. Implement the 'Log In' and 'Features' buttons. Change the href of each button, and fill in the box accordingly.
-      2. Change the header. Put the 'Resident Hall Staff Portal' on the far right, and put 'University of Colorado Boulder' next to the buffalo.
-      3. Change the signUp Javascript to check for student email when someone checks off RA, and change it to any email when hall director is selected.
--->
