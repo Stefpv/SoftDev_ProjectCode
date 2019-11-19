@@ -99,8 +99,7 @@ app.post('/login.html/signup', function(req, res){
 	}
 
 	var query = "SELECT first_name, last_name, " + table_email + " FROM " + table + " WHERE " + table_key + " = \'" + user_id + "\';";
-	console.log(query);
-
+	
   db.any(query)
     .then(function (rows) {
 				var isSuccessful = true;
