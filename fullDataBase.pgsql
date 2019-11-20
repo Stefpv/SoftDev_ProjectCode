@@ -17,7 +17,7 @@
 /********** UNIVERSITY DATA BASE **********/
 
 /* Contains the information about Residence Advisors */
-CREATE TABLE IF NOT EXISTS residentAdvisors(
+CREATE TABLE IF NOT EXISTS resident_advisors(
     student_ID CHAR(9) PRIMARY KEY, /* unique identifier for each reisdent advisor */
     first_name VARCHAR(20) NOT NULL, /* first name */
     last_name VARCHAR(20) NOT NULL, /* last name */
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS residentAdvisors(
 ); 
 
 /* Contains the information on Hall Directors */
-CREATE TABLE IF NOT EXISTS hallDirectors(
+CREATE TABLE IF NOT EXISTS hall_directors(
     staff_ID CHAR(9) PRIMARY KEY, /* unique identifier */
     first_name VARCHAR(20) NOT NULL, /* unique identifier */
     last_name VARCHAR(20) NOT NULL, /* unique identifier */
