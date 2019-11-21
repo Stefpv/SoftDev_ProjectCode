@@ -99,7 +99,7 @@ app.post('/login.html/signup', function(req, res){
 	}
 
 	var query = "SELECT first_name, last_name, " + table_email + " FROM " + table + " WHERE " + table_key + " = \'" + user_id + "\';";
-	
+
   db.any(query)
     .then(function (rows) {
 				var isSuccessful = true;
@@ -153,28 +153,32 @@ app.post('/staff-page.html/select_hall', function(req, res){
 
     var query = 'SELECT * FROM residentAdvisors LEFT JOIN profile_information ON residentAdvisors.student_ID = profile_information.user_ID WHERE residentAdvisors.residence_hall = \'' + hall_name + '\';';
 
-    db.any(query)
-      .then(function (rows) {
-          var staff_array = [];
+		searchStaff(query);
 
-          for (i = 0; i < rows.length; i++) {
-            var user = rows[i];
-            staff_array.push({picture_link: user.profile_picture, name: user.user_id, occupation: user.staff_position, description: user.bio});
-          }
+    function searchStaff (query) {
+			db.any(query)
+	      .then(function (rows) {
+	          var staff_array = [];
 
-          res.json({
-            staff : staff_array
-          });
-        })
-        .catch(function (err) {
-            // display error message
-            console.log('Could not process SQL query.', err);
+	          for (i = 0; i < rows.length; i++) {
+	            var user = rows[i];
+	            staff_array.push({picture_link: user.profile_picture, name: user.user_id, occupation: user.staff_position, description: user.bio});
+	          }
 
-            // send back an empty array.
-            res.json({
-              staff : []
-            });
-        })
+	          res.json({
+	            staff : staff_array
+	          });
+	        })
+	        .catch(function (err) {
+	            // display error message
+	            console.log('Could not process SQL query.', err);
+
+	            // send back an empty array.
+	            res.json({
+	              staff : []
+	            });
+	        })
+				}
 });
 
 app.get('/survey.html', function(req, res){

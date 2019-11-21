@@ -153,11 +153,10 @@
 
           if (req_staff_array.length == 0) {
             console.log("No staff info available.")
-            return;
-          }
-
-          for (i = 0; i < req_staff_array.length; i++) {
-            staffArray.push(req_staff_array[i]);
+          } else {
+            for (i = 0; i < req_staff_array.length; i++) {
+              staffArray.push(req_staff_array[i]);
+            }
           }
 
           removeCards();
