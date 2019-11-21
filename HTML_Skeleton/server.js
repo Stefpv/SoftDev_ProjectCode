@@ -89,7 +89,7 @@ app.post('/login.html/signup', function(req, res){
 
 	// variables used to change the query depending on user's position.
 	if (isResidentAdvisor) {
-		table = 'residentadvisors';
+		table = 'residentAdvisors';
 		table_key = 'student_ID';
 		table_email = 'student_email';
 	} else {
