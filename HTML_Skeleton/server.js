@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encod
 const pgp = require('pg-promise')();
 
 // IMPORTANT! Change these to reflect your system.
-const database_name = 'postgres';
-const database_password = 'csci';
+const database_name = 'university';
+const database_password = 'jojo345';
 
 const dbConfig = {
 	host: 'localhost',
@@ -89,7 +89,7 @@ app.post('/login.html/signup', function(req, res){
 
 	// variables used to change the query depending on user's position.
 	if (isResidentAdvisor) {
-		table = 'residentAdvisors';
+		table = 'residentadvisors';
 		table_key = 'student_ID';
 		table_email = 'student_email';
 	} else {
@@ -138,6 +138,39 @@ app.post('/login.html/signup', function(req, res){
 
 app.get('/resourcepage.html', function(req, res){
     res.sendFile('resourcepage.html', { root: view_dir } );
+});
+
+app.post('/resourcepage.html', function(req, res){
+    var hall_name = req.body.hall;
+
+    var query = 'SELECT * FROM resource_links;';
+
+		getResources(query);
+
+    function getResources (query) {
+			db.any(query)
+	      .then(function (rows) {
+	          var data_array = [];
+
+	          for (i = 0; i < rows.length; i++) {
+	            var resources = rows[i];
+	            data_array.push({linkimg: resources.image_link, name: resources.website_name , description: resources.description, link: resources.page_link});
+	          }
+
+	          res.json({
+	            data : data_array
+	          });
+	        })
+	        .catch(function (err) {
+	            // display error message
+	            console.log('Could not process SQL query.', err);
+
+	            // send back an empty array.
+	            res.json({
+	              data : []
+	            });
+	        })
+				}
 });
 
 app.get('/staff_form.html', function(req, res){
