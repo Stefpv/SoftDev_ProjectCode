@@ -1,5 +1,5 @@
 //populate data with information from database API
-var data = [
+var data_array = [
 		{linkimg:"https://pbs.twimg.com/media/D7OHWHmWsAAuTW6.jpg" ,name: "StarRes", description: "StarRes contains student information. Use it to look up students when writing Incident Reports.", link: "https://hdsapps.colorado.edu/starrezweb"},
 		{linkimg:"https://www.stetson.edu/law/conferences/highered/home/media/maxient%20logo%202.jpg" ,name: "Internal Incident Report", description: "Incident Reports are where you document policy violations or medical emergancies that happen in the resident halls. This internal link should not be shared outside of this page.", link: "https://rareport.wufoo.com/forms/qoxs6r0pdko5i/"},
 		{linkimg:"https://static-assets.technologyevaluation.com/SoftwareImages/0/20/20EF04D66A6A29D3C6F4EC7A2AC18B8B1704BE87/logo.png" ,name: "Duty Rounds", description: "On the Duty Rounds form log with your duty partner what happened during each duty night. This form varies by dorm.", link: "https://rareport.wufoo.com/forms/qoxs6r0pdko5i/"},
@@ -11,12 +11,62 @@ var data = [
 ]
 
 
+function updatePage() {
+
+	// empty staff array
+	while (data_array.length > 0) {
+		data_array.pop();
+	}
+
+	// create new request
+	var request = new XMLHttpRequest();
+
+	// update staff array and page once requested info is loaded
+	request.onload = function () {
+		console.log("Server has responded with info.");
+
+		var req_data_array = request.response.data;
+
+		if (req_data_array.length == 0)
+		{
+			console.log("No resource info available.")
+		}
+		else
+		{
+			for (i = 0; i < req_data_array.length; i++)
+			{
+				data_array.push(req_data_array[i]);
+			}
+		}
+
+		// removeCards();
+		fillResources();
+	}
+
+	// configure request
+	request.open("POST", "/resourcepage.html");
+	request.setRequestHeader("Content-Type", "application/json");
+	request.responseType = 'json';
+
+	// send request to server
+	request.send(); //JSON.stringify({hall : hallName})
+	console.log("Requesting info.");
+}
+
+// function removeCards ()
+// {
+// 	var container = document.getElementById("card-container");
+//
+// 	while (container.firstChild)
+// 	{
+// 		container.removeChild(container.firstChild);
+// 	}
+// }
 
 function fillResources()
 {
 
-
-	data.forEach(resource => {
+	data_array.forEach(resource => {
 
 		var card = document.createElement("div");
 				card.classList = "card";
