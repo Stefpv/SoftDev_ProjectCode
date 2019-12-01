@@ -104,7 +104,7 @@ function startSignUp(){
         email.onkeyup = function(){
 
             // Create regular expressions to check that the email is @colorado.edu
-            var studentEmail1 = /^[a-z]+\.[a-z]+@colorado\.edu$/g;
+            var studentEmail1 = /^[a-zA-Z]{1}[a-z]+\.[a-zA-Z]{1}[a-z]+@colorado\.edu$/g;
             var studentEmail2 = /^[a-z]{4}[0-9]{4}@colorado\.edu$/g;
 
             // Validate the email
