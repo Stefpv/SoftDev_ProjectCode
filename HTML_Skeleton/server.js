@@ -10,7 +10,7 @@ const pgp = require('pg-promise')();
 
 // IMPORTANT! Change these to reflect your system.
 const database_name = 'resident_hall_staff_portal_db';
-const database_password = '20260109';
+const database_password = 'password';
 
 const dbConfig = {
 	host: 'localhost',
@@ -40,36 +40,44 @@ app.get('/homepage.html', function(req, res){
 // NOTE: storing user password in database is not secure. Might be better to hash password into database.
 
 // verifies login request
-app.post('/homepage.html/verify', function(req, res){
-  console.log("Login requested.");
+app.post('/homepage.html/verify',function(req,res){
 
-  var email = req.body.loginEmail;
-  var password = req.body.loginPassword;
+    // Retrieve form data from log in page
+    var logInEmail = req.body.loginEmail;
+    var logInPsswd = req.body.loginPassword;
 
-  var query = "SELECT user_password FROM profile_information WHERE user_email = \'" + email + "\';";
-  db.any(query)
-    .then(function (rows) {
-        if (password == rows[0].user_password) {
-          console.log("User has been verified for log in.");
-          /* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
-          Procedure found on StackOverflow, by (link to be placed.)
-           - generate random 258 bit token for user, and store in database
-           - send token and user_email to browser to be stored in sessionStorage, as client_token and user_email
-           - every page requires validation with server
-              - send client_token and user_email to server from sessionStorage
-              - look up user info on database using user_email ONLY
-              - compare client_token and token on database, using timing-safe comparison
-           - may also store time of first login and/or last activity, and require a new login based on time and/or inactivity
-          */
-        } else {
-          console.log("User is not verified for log in.");
-        }
-      })
-      .catch(function (err) {
-          // display error message
-          console.log('Could not process SQL query.', err);
-      })
-});
+    // Change email format to match database
+    logInEmail = loginEmail.toLowerCase();
+
+    // Query to search the table of profiles
+    var login_query = 'SELECT * FROM profile_information WHERE (user_password=\'' + logInPsswd + '\') AND (user_email=\'' + logInEmail + '\'));';
+
+    db.any(login_query)
+        .then(function(rows){
+            if(rows.length == 0){
+				console.log("Incorrect Email or Password");
+				
+				/* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
+				Procedure found on StackOverflow, by (link to be placed.)
+				- generate random 258 bit token for user, and store in database
+				- send token and user_email to browser to be stored in sessionStorage, as client_token and user_email
+				- every page requires validation with server
+					- send client_token and user_email to server from sessionStorage
+					- look up user info on database using user_email ONLY
+					- compare client_token and token on database, using timing-safe comparison
+				- may also store time of first login and/or last activity, and require a new login based on time and/or inactivity
+				*/
+            }
+            else{
+                console.log("Log in successful");
+        
+                // Log them in and maintain their session
+            }
+        })
+        .catch(function(err){
+            console.log("SQL query could not be processed");
+        })
+})
 
 // process sign up request
 app.post('/homepage.html/signup', function(req,res){
@@ -119,20 +127,14 @@ app.post('/homepage.html/signup', function(req,res){
     db.any(signup_query)
         .then(function(rows){
 			console.log(rows.length);
-			
-			var i;
-			for (i = 0; i < rows.length; i++) {
-			   console.log(rows[i]);
-			}
 
-			console.log(rows[0].has_staff_portal_account);
-			
 			// if no rows are returned, then the user does not exist in the university resident hall staff data base
 			if(rows.length == 0){
 
 				// Create a modal/popup that tells the user the following:
 					if(staffPosition == "Resident Advisor"){
 						console.log("Invalid RA");
+
 						// "The information that you entered does not correspond to a current Resident Advisor of the University of Colorado: Boulder."
 						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
 					}
@@ -145,7 +147,9 @@ app.post('/homepage.html/signup', function(req,res){
 				// Upon closing the modal: leave their information in the form, and allow them to change it and submit again
 			}
 			else{
+				console.log(rows[0].has_staff_portal_account);
 				console.log("Valid Staff Member");
+
 				if(rows[0].has_staff_portal_account == true){ // user already has an account
 					// Tell the user that an account has aleady been created using the information they entered
 					// "An account has already been created with the information that you entered"
@@ -178,19 +182,18 @@ app.post('/homepage.html/signup', function(req,res){
 						]);
 					})
 					.then(info => {
+						// Tell the user that their account has successfully been created, and redirect them to log in
+						res.redirect('/homepage.html');
 						console.log("Successfully Inserted into tables");
 					})
 					.catch(error => {
-						console.log('SQL queries were unable to be processed');
-					})
-		
-					// Tell the user that their account has successfully been created
-		
+						console.log('SQL queries were unable to be processed',error);
+					})		
 				}
 			}
         })
         .catch(function(err){
-            console.log("SQL query could not be processed");
+            console.log("SQL query could not be processed", err);
         })
 });
 
