@@ -1,0 +1,153 @@
+    /* PASSWORD REQUIREMENTS */
+    /* Add a green text color and a checkmark when the password requirements are right */
+    .valid-password {
+    color: green;
+    }
+    .valid-password:before {
+    position: relative;
+    left: -5px;
+    content: '\2713';
+    font-size: 12px;
+    }
+
+    /* Add a red text color and an "x" when the password requirements are wrong */
+    .invalid-password {
+    color: red;
+    }
+    .invalid-password:before {
+    position: relative;
+    left: -5px;
+    content: '\00D7';
+    font-size: 12px;
+    }
+
+    /* OTHER FIELDS OF THE FORM */
+    /* Add a green checkmark when the given field is correct */
+    .valid {
+    color: green;
+    }
+    .valid:before {
+    position: relative;
+    /* left: -5px; */
+    content: '\2713';
+    font-size: 15px;
+    }
+
+    /* Add a red 'x' when the given field is incorrect */
+    .invalid {
+    color: red;
+    }
+    .invalid:before {
+    position: relative;
+    /* left: -5px; */
+    content: '\00D7';
+    font-size: 15px;
+    }
+
+    /* Not allowed symbol of mouse when hovering over the submit button */
+    .not-allowed {cursor: not-allowed;}
+
+    .header-text {
+        font-size: 45px;
+    }
+
+    /* buttons for choosing log in or features */
+    .show-login-or-features {
+        background-color: black;
+        border: none;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin-top: 30px;
+        width: 150px;
+        cursor: pointer;
+    }
+
+    .login-or-features-selected {
+        background-color: #CFB87C;
+        border: none;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin-top: 30px;
+        width: 150px;
+        cursor: pointer;
+    }
+
+    /* Box for log in form*/
+    .login-box {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    background-color: #CFB87C;
+    /* background-image: linear-gradient(#CFB87C 40%,white); */
+    width: 550px;
+    height: 399.67px;
+    /* border: 3px solid #CFB87C; */
+    padding: 20px;
+    margin: none;
+    position: relative;
+    }
+
+    .login-button {
+    background-color: black;
+    border-radius: 7px;
+    border: none;
+    color: white;
+    padding: 7px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }
+
+    .login-button:hover{
+    background-color:white;
+    color: black;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+    .create-button {
+    background-color: black;
+    border-radius: 7px;
+    border: none;
+    color: white;
+    padding: 7px 50px;
+    text-align: center;
+    text-decoration: none;
+    /* display: block; */
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }
+
+    .create-button:hover{
+    background-color:white;
+    color: black;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    text-decoration: none;
+    }
+
+    hr.login {
+    border: 1px solid black;
+    }
+
+    /* Box for log in form*/
+    .add-resource-box {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    background-color: #CFB87C;
+    margin: 1rem;
+    /* background-image: linear-gradient(#CFB87C 40%,white); */
+    /*width: 800px;
+    height: 399.67px;*/
+    /* border: 3px solid #CFB87C; */
+    padding: 20px;
+    margin: none;
+    position: relative;
+    }
