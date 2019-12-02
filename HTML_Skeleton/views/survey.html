@@ -65,7 +65,7 @@
             <div class = "jumbotron text-left" style = "background-color:#CFB87C;">
                 <h1><font color = "black">Feedback Form</font></h1>
             </div>
-            <form action = "survey.php" method = "POST">
+            <form>
                 <div class = "row">
                     <div class = "col">
                         <div class = "form-group">
@@ -74,13 +74,16 @@
                         </div> <br>
                     </div>
                     <div class = "col">
-                            <div class = "form-group">
-                                <label for = "NameInput"><h3>Last Name</h3></label>
-                                <input type = "text" class = "form-control" id = "LastNameInput" placeholder="Last Name">
-                            </div> <br>
-                        </div>
+                        <div class = "form-group">
+                            <label for = "NameInput"><h3>Last Name</h3></label>
+                            <input type = "text" class = "form-control" id = "LastNameInput" placeholder="Last Name">
+                        </div> <br>
+                    </div>
                 </div>
-
+                <div class = "form-group">
+                    <label for = "NameInput"><h3>Student ID</h3></label>
+                    <input type="text" id="studentID" name="studentID" class="form form-control form-control" maxlength="9" pattern="[0-9]{9}" placeholder="Student ID">
+                </div> <br>
                 <h3>Urgency of the issue</h3>
                 <body><h6>1 being most urgent</h6></body> <br>
                 <div class = "row">
@@ -160,7 +163,7 @@
                 </div>
             </div>
             <div class="container mt-3">
-                <input type="submit" class="btn btn-primary">
+                <input type="submit" class="btn btn-outline-dark">
             </div>
         </form> 
         </div>
