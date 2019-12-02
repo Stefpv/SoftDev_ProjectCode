@@ -240,9 +240,9 @@ app.post('/staff-page.html/select_hall', function(req, res){
 				}
 });
 
-app.get('/survey.html', function(req,res){	app.get('/survey.html', function(req, res){
-	res.sendFile('survey.html', {root: view_dir}); 	    res.sendFile('survey.html', { root: view_dir } );
-});	});
+app.get('/survey.html', function(req,res){	
+	res.sendFile('survey.html', {root: view_dir}); 	   
+});	
 //Post is not working
 app.post('/survey.html', function(req, res){
 	console.log("Got here...");
