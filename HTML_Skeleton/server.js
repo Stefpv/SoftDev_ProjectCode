@@ -20,6 +20,7 @@ const dbConfig = {
 	password: database_password
 };
 
+
 let db = pgp(dbConfig);
 
 // statically serve the files (images, javascript, css...) in current directory.
@@ -173,6 +174,31 @@ app.post('/resourcepage.html', function(req, res){
 				}
 });
 
+// process sign up request
+app.post('/resourcepage.html/addResource', function(req, res){
+  console.log("Add Resource requested.");
+
+	var name = req.body.resourceTitle;
+	var link = req.body.resourceLink;
+	var linkimg = req.body.resourceLinkimg;
+  var discription = req.body.resourceDiscription;
+console.log("1");
+	var query = "INSERT INTO resource_links VALUES ('" + name + "','" +link+  "','"+ linkimg +"','"+ discription +"');";
+	//var query = "INSERT INTO resource_links (website_name, page_link, image_link, description) VALUES " + name + ", " + link + ", " + linkimg + ", " + discription + ";";
+console.log("2");
+  db.any(query)
+    .then(function (rows) {
+				console.log('Added to database');
+				res.sendFile('resourcepage.html', { root: view_dir } );
+      })
+      .catch(function (err) {
+          // display error message
+          console.log('Could not process SQL query.', err);
+      })
+
+
+});
+
 app.get('/staff_form.html', function(req, res){
     res.sendFile('staff_form.html', { root: view_dir } );
 });
@@ -214,32 +240,32 @@ app.post('/staff-page.html/select_hall', function(req, res){
 				}
 });
 
-app.get('/survey.html', function(req,res){
-	res.sendFile('survey.html', {root: view_dir}); 
-});
+app.get('/survey.html', function(req,res){	app.get('/survey.html', function(req, res){
+	res.sendFile('survey.html', {root: view_dir}); 	    res.sendFile('survey.html', { root: view_dir } );
+});	});
 //Post is not working
 app.post('/survey.html', function(req, res){
 	console.log("Got here...");
-	console.log("request body: "+ Object.keys(req.body)); 
-	var s_id = req.body.user_id; 
-	var urgencyNum = req.body.urgency; 
-	var fname = req.body.firstname; 
-	var lname = req.body.lastName; 
-	var des = req.body.description; 
-	var classifications = []; 
+	console.log("request body: "+ Object.keys(req.body));
+	var s_id = req.body.user_id;
+	var urgencyNum = req.body.urgency;
+	var fname = req.body.firstname;
+	var lname = req.body.lastName;
+	var des = req.body.description;
+	var classifications = [];
 	for(var i = 0; i < 5; i++)
 	{
 		classifications[i] = req.body.classifications;
 	}
 
-	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+",'"+classifications+"') ON CONFLICT DO NOTHING;"; 
+	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+",'"+classifications+"') ON CONFLICT DO NOTHING;";
 	db.task('get-everything', task =>{
 		return task.batch([
 			task.any(insert_statment)
 		]);
-	}) 
+	})
 	.catch(function(err){
-		console.log('Could not insert into SQL',err); 
+		console.log('Could not insert into SQL',err);
 	})
 })
 

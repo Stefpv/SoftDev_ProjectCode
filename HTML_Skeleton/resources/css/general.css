@@ -53,7 +53,7 @@
 
     /* buttons for choosing log in or features */
     .show-login-or-features {
-        background-color: black; 
+        background-color: black;
         border: none;
         padding: 10px 32px;
         text-align: center;
@@ -88,12 +88,12 @@
     height: 399.67px;
     /* border: 3px solid #CFB87C; */
     padding: 20px;
-    margin: none; 
+    margin: none;
     position: relative;
     }
 
     .login-button {
-    background-color: black; 
+    background-color: black;
     border-radius: 7px;
     border: none;
     color: white;
@@ -113,7 +113,7 @@
     }
 
     .create-button {
-    background-color: black; 
+    background-color: black;
     border-radius: 7px;
     border: none;
     color: white;
@@ -135,4 +135,19 @@
 
     hr.login {
     border: 1px solid black;
+    }
+
+    /* Box for log in form*/
+    .add-resource-box {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    background-color: #CFB87C;
+    margin: 1rem;
+    /* background-image: linear-gradient(#CFB87C 40%,white); */
+    /*width: 800px;
+    height: 399.67px;*/
+    /* border: 3px solid #CFB87C; */
+    padding: 20px;
+    margin: none;
+    position: relative;
     }
