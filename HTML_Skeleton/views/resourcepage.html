@@ -75,11 +75,64 @@
 
 
 
+
+
+
     <!-- Resource Cards for each website being used -->
 
 
     <div id="container" class="container d-flex flex-wrap justify-content-center">
       <!-- Dynamically create each card in javascript -->
+
+
+
+          <!-- linkimg:"https://pbs.twimg.com/media/D7OHWHmWsAAuTW6.jpg" ,name: "StarRes", description: "StarRes contains student information. Use it to look up students when writing Incident Reports.", link: "https://hdsapps.colorado.edu/starrezweb" -->
+        <!-- Login form -->
+        <form action="/resourcepage.html/addResource" method="post">
+          <div id="addResourceBox" class="add-resource-box">
+            <div id="addResource" style="visibility: visible;">
+              <div class="form-row">
+                <div class="form-group col">
+                  <h1>Add a Resource</h1>
+                  <h5>Title: </h5>
+                  <input type="text" id="resourceTitle" class="form form-control" name="resourceTitle" placeholder="Tile">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5>Website Link: </h5>
+                  <input type="text" id="resourceLink" class="form form-control" name="resourceLink" placeholder="Website Link">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5>Picture Link: </h5>
+                  <input type="text" id="resourceLinkimg" class="form form-control" name="resourceLinkimg" placeholder="Picture Link">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5>Discription: </h5>
+                  <input type="text" id="resourceDiscription" class="form form-control" name="resourceDiscription" placeholder="Discription">
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-row">
+                <div class="form-group col">
+                  <input type="submit" class="create-button btn-block" id="SubmitButton"></a>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </form>
+
+
     </div>
 
 
