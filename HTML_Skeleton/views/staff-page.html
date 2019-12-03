@@ -205,7 +205,7 @@
           // TO DO: give some flexibility for reasonably sized images
           var cardImage = document.createElement("img");
           cardImage.classList.add("card-img-top");
-          cardImage.src = "../resources/img/staff-images/" + staffArray[index].picture_link + ".jpg";
+          cardImage.src = "../resources/img/staff-images/" + staffArray[index].picture_link;
           cardImage.onerror = function () {
             this.onerror = null;
             this.src = "../resources/img/staff-images/blank_photo.png";
