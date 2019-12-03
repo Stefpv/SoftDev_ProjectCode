@@ -308,6 +308,7 @@ app.get('/survey.html', function(req,res){
 //Post is not working
 app.post('/survey.html', function(req, res){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	console.log("Got here...");
 	console.log("request body: "+ Object.keys(req.body));
 	var s_id = req.body.user_id;
@@ -323,6 +324,8 @@ app.post('/survey.html', function(req, res){
 
 	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+",'"+classifications+"') ON CONFLICT DO NOTHING;";
 =======
+=======
+>>>>>>> Stashed changes
 
 	var s_id = req.body.studentID; 
 	var urgencyNum = req.body.Urgency; 
@@ -360,6 +363,9 @@ app.post('/survey.html', function(req, res){
 	class_test.push({classifications})
 
 	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;"; 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	db.task('get-everything', task =>{
 		return task.batch([
