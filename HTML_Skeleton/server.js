@@ -307,6 +307,7 @@ app.get('/survey.html', function(req,res){
 });	
 //Post is not working
 app.post('/survey.html', function(req, res){
+<<<<<<< Updated upstream
 	console.log("Got here...");
 	console.log("request body: "+ Object.keys(req.body));
 	var s_id = req.body.user_id;
@@ -321,6 +322,45 @@ app.post('/survey.html', function(req, res){
 	}
 
 	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+",'"+classifications+"') ON CONFLICT DO NOTHING;";
+=======
+
+	var s_id = req.body.studentID; 
+	var urgencyNum = req.body.Urgency; 
+	var fname = req.body.firstname; 
+	var lname = req.body.lastname; 
+	var des = req.body.description; 
+	var classifications = req.body.classifications; 
+
+	var surveyClassification = []; 
+
+	console.log(s_id); 
+	console.log(urgencyNum); 
+	console.log(fname);
+	console.log(lname); 
+	console.log(des); 
+	console.log(classifications); 
+
+	// var class_str = '{';
+	// for(var i = 0; i < classifications.length; i++)
+	// {
+	// 	if(i == classifications.length-1)
+	// 	{
+	// 		class_str = class_str + classifications[i].toString();
+	// 	}
+	// 	else
+	// 	{
+	// 		class_str += classifications[i].toString() + ', ';
+	// 	}
+	// }
+	// class_str += '}'; 
+
+
+	// console.log(class_str); 
+	var class_test = []; 
+	class_test.push({classifications})
+
+	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;"; 
+>>>>>>> Stashed changes
 	db.task('get-everything', task =>{
 		return task.batch([
 			task.any(insert_statment)
@@ -329,7 +369,7 @@ app.post('/survey.html', function(req, res){
 	.catch(function(err){
 		console.log('Could not insert into SQL',err);
 	})
-})
+});
 
 // create server at port 3000
 app.listen(3000, function () {
