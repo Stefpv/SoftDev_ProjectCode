@@ -1,2 +1,9 @@
 # SoftDev_ProjectCode
-The project code will be saved here.
+
+Explain what our project is about. (motivation, usage, etc)
+
+
+Describe repo organization/structure.
+
+
+Describe how to build/run/test/etc the code.
