@@ -41,100 +41,162 @@ app.get('/login.html', function(req, res){
 // NOTE: storing user password in database is not secure. Might be better to hash password into database.
 
 // verifies login request
-app.post('/login.html/verify', function(req, res){
-  console.log("Login requested.");
+app.post('/homepage.html/verify',function(req,res){
 
-  var email = req.body.loginEmail;
-  var password = req.body.loginPassword;
+    // Retrieve form data from log in page
+    var logInEmail = req.body.loginEmail;
+    var logInPsswd = req.body.loginPassword;
 
-  var query = "SELECT user_password FROM profile_information WHERE user_email = \'" + email + "\';";
-  db.any(query)
-    .then(function (rows) {
-        if (password == rows[0].user_password) {
-          console.log("User has been verified for log in.");
-          /* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
-          Procedure found on StackOverflow, by (link to be placed.)
-           - generate random 258 bit token for user, and store in database
-           - send token and user_email to browser to be stored in sessionStorage, as client_token and user_email
-           - every page requires validation with server
-              - send client_token and user_email to server from sessionStorage
-              - look up user info on database using user_email ONLY
-              - compare client_token and token on database, using timing-safe comparison
-           - may also store time of first login and/or last activity, and require a new login based on time and/or inactivity
-          */
-        } else {
-          console.log("User is not verified for log in.");
-        }
-      })
-      .catch(function (err) {
-          // display error message
-          console.log('Could not process SQL query.', err);
-      })
-});
+    // Change email format to match database
+    logInEmail = logInEmail.toLowerCase();
+
+    // Query to search the table of profiles
+    var login_query = 'SELECT * FROM profile_information WHERE (user_password=\'' + logInPsswd + '\') AND (user_email=\'' + logInEmail + '\');';
+
+    db.any(login_query)
+        .then(function(rows){
+            if(rows.length == 0){
+				console.log("Incorrect Email or Password");
+				
+				/* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
+				Procedure found on StackOverflow, by (link to be placed.)
+				- generate random 258 bit token for user, and store in database
+				- send token and user_email to browser to be stored in sessionStorage, as client_token and user_email
+				- every page requires validation with server
+					- send client_token and user_email to server from sessionStorage
+					- look up user info on database using user_email ONLY
+					- compare client_token and token on database, using timing-safe comparison
+				- may also store time of first login and/or last activity, and require a new login based on time and/or inactivity
+				*/
+            }
+            else{
+                console.log("Log in successful");
+        
+				// Log them in and maintain their session
+				res.redirect('/staff_form.html');
+            }
+        })
+        .catch(function(err){
+            console.log("SQL query could not be processed", err);
+        })
+})
 
 // process sign up request
-app.post('/login.html/signup', function(req, res){
-  console.log("Signup requested.");
+app.post('/homepage.html/signup', function(req,res){
 
-	var staff_position = req.body.staffPositions;
-	var first_name = req.body.firstName;
-	var last_name = req.body.lastName;
-  var email = req.body.userEmail;
-	var user_id = req.body.studentID;
-  var password = req.body.loginPassword;
+    console.log("Sign Up Requested");
 
-	var table = '';
-	var table_key = '';
+    // Retrieve the input from the Sign Up Form
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var staffPosition = req.body.staffPositions;
+    var email = req.body.userEmail;
+    var userID = req.body.userID;
+	var password = req.body.confirmPassword;
 
-	var isResidentAdvisor = (staff_position == 'Resident Advisor');
+    // Change capitalization formatting to match the format of the data base
+        // First Name 
+        firstName = firstName[0].toUpperCase() + firstName.substring(1).toLowerCase();
+        
+        // Last Name
+        lastName = lastName[0].toUpperCase() + lastName.substring(1).toLowerCase();
 
-	// variables used to change the query depending on user's position.
-	if (isResidentAdvisor) {
-		table = 'residentAdvisors';
-		table_key = 'student_ID';
-		table_email = 'student_email';
-	} else {
-		table = 'hallDirectors';
-		table_key = 'staff_ID';
-		table_email = 'staff_email';
-	}
+        // Email
+		email = email.toLowerCase();
+		
 
-	var query = "SELECT first_name, last_name, " + table_email + " FROM " + table + " WHERE " + table_key + " = \'" + user_id + "\';";
+	console.log(firstName);
+	console.log(lastName);
+	console.log(staffPosition);
+	console.log(email);
+	console.log(userID);
+	console.log(password);
 
-  db.any(query)
-    .then(function (rows) {
-				var isSuccessful = true;
+    // Declare query that will be run to see if there is a match in the data base
+    var signup_query;
 
-				// check if name matches record
-        if (rows[0].first_name != first_name || rows[0].last_name != last_name) {
-					isSuccessful = false;
-				}
+    // Set the query according to what staff position the user selected
+    if(staffPosition == "Resident Advisor"){
+		signup_query = 'SELECT * FROM resident_advisors WHERE (\'' + userID + '\'=student_ID) AND (\'' + firstName + '\'=first_name) AND (\'' + lastName + '\'=last_name) AND (\'' + email + '\'=student_email);';
+    }
+    else{
+		signup_query = 'SELECT * FROM hall_directors WHERE (\'' + userID + '\'=staff_ID) AND (\'' + firstName + '\'=first_name) AND (\'' + lastName + '\'=last_name) AND (\'' + email + '\'=staff_email);';
+    }
 
-				// check if email matches record
-				if (isResidentAdvisor) {
-					if (rows[0].student_email != email) {
-						isSuccessful = false;
+	console.log(signup_query);
+
+    // Run the query to see if there is a match in the table
+    db.any(signup_query)
+        .then(function(rows){
+			console.log(rows.length);
+
+			// if no rows are returned, then the user does not exist in the university resident hall staff data base
+			if(rows.length == 0){
+
+				// Create a modal/popup that tells the user the following:
+					if(staffPosition == "Resident Advisor"){
+						console.log("Invalid RA");
+
+						// "The information that you entered does not correspond to a current Resident Advisor of the University of Colorado: Boulder."
+						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
 					}
-				} else {
-					if (rows[0].staff_email != email) {
-						isSuccessful = false;
+					else{
+						console.log("Invalid Hall Director");
+						// "The information that you entered does not correspond to a current Hall Director of the University of Colorado: Boulder."
+						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
+					}            
+		
+				// Upon closing the modal: leave their information in the form, and allow them to change it and submit again
+			}
+			else{
+				console.log(rows[0].has_staff_portal_account);
+				console.log("Valid Staff Member");
+
+				if(rows[0].has_staff_portal_account == true){ // user already has an account
+					// Tell the user that an account has aleady been created using the information they entered
+					// "An account has already been created with the information that you entered"
+					console.log("Account has already been created");
+				}
+				else{ // Create their account
+					
+					console.log("Creating Account");
+
+					// Fill in the profile_information table
+					var insert_profile_query = 'INSERT INTO profile_information VALUES (\'' + userID + '\',\'' + password + '\',\'' + email + '\',' + '\'\'' + ',\'' + staffPosition + '\',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ');';
+					
+					// Update the boolean value to indicate that they have created an account for our website
+					var update_boolean_query;
+					if(staffPosition == "Resident Advisor"){
+						update_boolean_query = 'UPDATE resident_advisors SET has_staff_portal_account=TRUE WHERE student_ID =\'' + userID + '\';';
 					}
+					else{
+						update_boolean_query = 'UPDATE hall_directors SET has_staff_portal_account=TRUE WHERE staff_ID =\'' + userID + '\';';
+					}
+					
+					console.log(insert_profile_query);
+					console.log(update_boolean_query);
+
+					// Run the insertion queries
+					db.task('get-everything', task => {
+						return task.batch([
+							task.any(insert_profile_query),
+							task.any(update_boolean_query)
+						]);
+					})
+					.then(info => {
+						// Tell the user that their account has successfully been created, and redirect them to log in
+						res.redirect('/homepage.html');
+						console.log("Successfully Inserted into tables");
+					})
+					.catch(error => {
+						console.log('SQL queries were unable to be processed',error);
+					})		
 				}
-
-				// TO DO: add user to profile_information database, or send alert message if sign up failde.
-				if (isSuccessful) {
-					console.log("Sign up info verified.");
-				} else {
-					console.log("Sign up failed!");
-				}
-
-      })
-      .catch(function (err) {
-          // display error message
-          console.log('Could not process SQL query.', err);
-      })
-
-
+			}
+        })
+        .catch(function(err){
+            console.log("SQL query could not be processed", err);
+        })
 });
 
 app.get('/resourcepage.html', function(req, res){
