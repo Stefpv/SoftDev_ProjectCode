@@ -261,8 +261,43 @@ console.log("2");
 
 });
 
-app.get('/staff_form.html', function(req, res){
+app.get('/staff_form', function(req, res){
     res.sendFile('staff_form.html', { root: view_dir } );
+});
+
+app.post('/staff_form', function(req, res){
+	// for each( var thing in req.body){
+		console.log("request body: " + Object.keys(req.body));
+		console.log("First Name:" + req.body.fname);
+	// }
+	var pname = req.body.fname;
+	var gi = req.body.gender;
+	var major = req.body.major;
+	var bio = req.body.bio;
+	var id = req.body.id;
+	String(id);
+	//var pic_path = req.body.pic;
+	//			MISSING PICTURE
+	// var insert = "INSERT INTO profile_information " +
+	// "(preferred_name, gender_identity, major, bio) " +
+	// "VALUES ('"+pname+"', '"+gi+"', '"+major+"', '"+bio+"') WHERE user_ID = '"+id+"' "; //missing image and NOT WORKING WITH where
+	var insert = "UPDATE profile_information SET preferred_name = '" + pname + "', gender_identity = '" + gi +
+	"', major = '" + major + "', bio = '" + bio + "' WHERE user_ID = " + " CAST('" + id + "' AS CHAR(9));";
+	console.log(insert);
+	console.log(typeof id);
+		db.task('get-everything', task =>{
+			return task.batch([
+				task.any(insert)
+			]);
+		})
+		.catch(function (err) {
+				// display error message
+				console.log('Could not process SQL query.', err);
+		})
+// add some sort of condition in query to only add info if person is logged in, maybe that is something that
+//should be addressed somwhere else in the code
+//try to add picture too!!!!1
+console.log("Name: " + pname + " Gender: " + gi + " ID: " + id);
 });
 
 app.get('/staff-page.html', function(req, res){
