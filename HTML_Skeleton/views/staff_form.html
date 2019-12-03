@@ -41,13 +41,16 @@
               </li>
           </ul>
       </div>
+    
+       <h1>Staff's Personal Profile</h1> 
+        
     </nav>
     <div class="container">
-      <form>
+      <form id="personal_info"action="/staff_form" method="post">
         <br>
       </br>
         <div class="row">
-        <div class="col">
+          <div class="col">
           <label class="font-weight-bold" for="text">Profile Picture</label>
           <div>
             <img class="img-fluid" src="../resources/img/temp_image.svg" width="200" height="200">
@@ -56,33 +59,37 @@
         </br>
           <div>
           <input type="file" name="fileToUpload" id="fileToUpload">
-          <input type="submit" value="Upload Image" name="submit">
+          <input type="submit" value="Upload Image" name="pic">
         </div>
         </div>
         <div class="col">
           <label class="font-weight-bold">Preferred First Name</label>
-          <input class="form-control">
+          <input class="form-control" name="fname">
           <br>
         </br>
           <label class="font-weight-bold">Gender Identity</label>
-          <input class="form-control">
+          <input class="form-control" name="gender">
           <br>
         </br>
           <label class="font-weight-bold">Major</label>
-          <input class="form-control">
+          <input class="form-control" name="major">
+        <br>
+        </br>
+          <label class="font-weight-bold">ID</label>
+          <input class="form-control" name="id">
         </div>
       </div>
 
       <br>
     </br>
         <div>
-          <label class="font-weight-bold" for="text">Description</label>
-          <textarea class="form-control" id="text" rows="5" maxlength="300" placeholder="300 Characters Max"></textarea>
+          <label class="font-weight-bold" for="text">Biography</label>
+          <textarea class="form-control" id="text" rows="5" maxlength="300" placeholder="300 Characters Max" name="bio"></textarea>
         </div>
         <br>
       </br>
       <div>
-        <input type="submit" class="btn btn-outline-dark">
+        <button type="submit" fomr="personal_info" class="btn btn-outline-dark">Submit</button>
       </div>
       </form>
     </div>
