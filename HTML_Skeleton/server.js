@@ -272,7 +272,7 @@ app.get('/staff-page.html', function(req, res){
 app.post('/staff-page.html/select_hall', function(req, res){
     var hall_name = req.body.hall;
 
-    var query = 'SELECT * FROM residentAdvisors LEFT JOIN profile_information ON residentAdvisors.student_ID = profile_information.user_ID WHERE residentAdvisors.residence_hall = \'' + hall_name + '\';';
+    var query = 'SELECT * FROM resident_advisors LEFT JOIN profile_information ON resident_advisors.student_ID = profile_information.user_ID WHERE resident_advisors.residence_hall = \'' + hall_name + '\';';
 
 		searchStaff(query);
 
@@ -307,25 +307,6 @@ app.get('/survey.html', function(req,res){
 });	
 //Post is not working
 app.post('/survey.html', function(req, res){
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	console.log("Got here...");
-	console.log("request body: "+ Object.keys(req.body));
-	var s_id = req.body.user_id;
-	var urgencyNum = req.body.urgency;
-	var fname = req.body.firstname;
-	var lname = req.body.lastName;
-	var des = req.body.description;
-	var classifications = [];
-	for(var i = 0; i < 5; i++)
-	{
-		classifications[i] = req.body.classifications;
-	}
-
-	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+",'"+classifications+"') ON CONFLICT DO NOTHING;";
-=======
-=======
->>>>>>> Stashed changes
 
 	var s_id = req.body.studentID; 
 	var urgencyNum = req.body.Urgency; 
@@ -333,9 +314,7 @@ app.post('/survey.html', function(req, res){
 	var lname = req.body.lastname; 
 	var des = req.body.description; 
 	var classifications = req.body.classifications; 
-
-	var surveyClassification = []; 
-
+	
 	console.log(s_id); 
 	console.log(urgencyNum); 
 	console.log(fname);
@@ -343,34 +322,32 @@ app.post('/survey.html', function(req, res){
 	console.log(des); 
 	console.log(classifications); 
 
-	// var class_str = '{';
-	// for(var i = 0; i < classifications.length; i++)
-	// {
-	// 	if(i == classifications.length-1)
-	// 	{
-	// 		class_str = class_str + classifications[i].toString();
-	// 	}
-	// 	else
-	// 	{
-	// 		class_str += classifications[i].toString() + ', ';
-	// 	}
-	// }
-	// class_str += '}'; 
+	var class_str = '{';
+	for(var i = 0; i < classifications.length; i++)
+	{
+		if(i == classifications.length-1)
+		{
+			class_str = class_str + classifications[i].toString();
+		}
+		else
+		{
+			class_str += classifications[i].toString() + ', ';
+		}
+	}
+	class_str += '}'; 
 
 
-	// console.log(class_str); 
-	var class_test = []; 
-	class_test.push({classifications})
+	console.log(class_str); 
 
 	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;"; 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	db.task('get-everything', task =>{
 		return task.batch([
 			task.any(insert_statment)
 		]);
+	})
+	.then(info => {
+		res.redirect('/resourcepage.html');
+		console.log("Successfully Inserted into tables");
 	})
 	.catch(function(err){
 		console.log('Could not insert into SQL',err);
