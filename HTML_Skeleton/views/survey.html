@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
         <title>Survey Page</title>
@@ -65,18 +65,18 @@
             <div class = "jumbotron text-left" style = "background-color:#CFB87C;">
                 <h1><font color = "black">Feedback Form</font></h1>
             </div>
-            <form>
+            <form action = "survey.html" method = post>
                 <div class = "row">
                     <div class = "col">
                         <div class = "form-group">
                             <label for = "NameInput"><h3>First Name</h3></label>
-                            <input type = "text" class = "form-control" id = "FirstNameInput" placeholder="First Name">
+                            <input type = "text" class = "form-control" id = "FirstNameInput" name = "firstname" placeholder="First Name">
                         </div> <br>
                     </div>
                     <div class = "col">
                         <div class = "form-group">
                             <label for = "NameInput"><h3>Last Name</h3></label>
-                            <input type = "text" class = "form-control" id = "LastNameInput" placeholder="Last Name">
+                            <input type = "text" class = "form-control" id = "LastNameInput" name = "lastname" placeholder="Last Name">
                         </div> <br>
                     </div>
                 </div>
@@ -89,75 +89,75 @@
                 <div class = "row">
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L1" value = "option1" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L1" value = "1" checked>
                             <label class = "form-check-label" for = "L1">1</label>
                         </div>
                     </div>
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L2" value = "option2" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L2" value = "2" checked>
                             <label class = "form-check-label" for = "L2">2</label>
                         </div>
                     </div>
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L3" value = "option3" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L3" value = "3" checked>
                             <label class = "form-check-label" for = "L3">3</label>
                         </div>
                     </div>
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L4" value = "option4" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L4" value = "4" checked>
                             <label class = "form-check-label" for = "L4">4</label>
                         </div>
                     </div>
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L5" value = "option5" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L5" value = "5" checked>
                             <label class = "form-check-label" for = "L5">5</label>
                         </div>
                     </div>
                     <div class = "col">
                         <div class = "form-check">
-                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L6" value = "option6" checked>
+                            <input class = "form-check-input" type = "radio" name = "Urgency" id = "L6" value = "6" checked>
                             <label class = "form-check-label" for = "L6">6</label>
                         </div>
                     </div>
                 </div> <br>
                 <div class="form-group">
                     <label><h3>Comments</h3></label>
-                    <textarea id = "comments" ></textarea>
+                    <textarea id = "comments" name = "description"></textarea>
                 </div>
              <br>
             <h3>Check all that apply</h3>
             <div class = "row">
                 <div class = "col">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Checkbox1" value="option1">
+                        <input class="form-check-input" type="checkbox" name = "classifications"id="Checkbox1" value="scheduling">
                         <label class="form-check-label" for="Checkbox1">&nbsp;&nbsp;Scheduling</label>
                     </div>
                 </div>
                 <div class = "col">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Checkbox2" value="option2">
+                        <input class="form-check-input" type="checkbox" name = "classifications"id="Checkbox2" value="dorm">
                         <label class="form-check-label" for="Checkbox2">&nbsp;&nbsp;Dorm</label>
                     </div>
                 </div>
                 <div class = "col">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Checkbox3" value="option3">
+                        <input class="form-check-input" type="checkbox"name = "classifications" id="Checkbox3" value="facilities">
                         <label class="form-check-label" for="Checkbox3">&nbsp;&nbsp;Facilities</label>
                     </div>
                 </div>
                 <div class = "col">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Checkbox4" value="option4">
+                        <input class="form-check-input" type="checkbox" name = "classifications"id="Checkbox4" value="coworkers">
                         <label class="form-check-label" for="Checkbox4">&nbsp;&nbsp;Coworkers</label>
                     </div>
                 </div>
                 <div class = "col">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Checkbox5" value="option5">
+                        <input class="form-check-input" type="checkbox" name = "classifications"id="Checkbox5" value="events">
                         <label class="form-check-label" for="Checkbox5">&nbsp;&nbsp;Events</label>
                     </div>
                 </div>
@@ -167,5 +167,9 @@
             </div>
         </form> 
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
+<!--Make sure to disable submit button before all fields are inputed -->
 </html>
