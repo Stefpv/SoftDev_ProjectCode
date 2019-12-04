@@ -162,7 +162,7 @@ app.post('/homepage.html/signup', function(req,res){
 					console.log("Creating Account");
 
 					// Fill in the profile_information table
-					var insert_profile_query = 'INSERT INTO profile_information VALUES (\'' + userID + '\',\'' + password + '\',\'' + email + '\',' + '\'\'' + ',\'' + staffPosition + '\',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ');';
+					var insert_profile_query = 'INSERT INTO profile_information VALUES (\'' + userID + '\',\'' + password + '\',\'' + email + '\',\'' + firstName + ' ' + lastName + '\',\'' + staffPosition + '\',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ');';
 					
 					// Update the boolean value to indicate that they have created an account for our website
 					var update_boolean_query;
@@ -252,6 +252,7 @@ console.log("2");
     .then(function (rows) {
 				console.log('Added to database');
 				res.sendFile('resourcepage.html', { root: view_dir } );
+
       })
       .catch(function (err) {
           // display error message
@@ -307,7 +308,7 @@ app.get('/staff-page.html', function(req, res){
 app.post('/staff-page.html/select_hall', function(req, res){
     var hall_name = req.body.hall;
 
-    var query = 'SELECT * FROM residentAdvisors LEFT JOIN profile_information ON residentAdvisors.student_ID = profile_information.user_ID WHERE residentAdvisors.residence_hall = \'' + hall_name + '\';';
+    var query = 'SELECT * FROM resident_advisors LEFT JOIN profile_information ON resident_advisors.student_ID = profile_information.user_ID WHERE resident_advisors.residence_hall = \'' + hall_name + '\';';
 
 		searchStaff(query);
 
@@ -318,7 +319,7 @@ app.post('/staff-page.html/select_hall', function(req, res){
 
 	          for (i = 0; i < rows.length; i++) {
 	            var user = rows[i];
-	            staff_array.push({picture_link: user.profile_picture, name: user.user_id, occupation: user.staff_position, description: user.bio});
+	            staff_array.push({picture_link: user.profile_picture, name: user.preferred_name, occupation: user.staff_position, major: user.major, gender: user.gender_identity, description: user.bio});
 	          }
 
 	          res.json({
@@ -349,13 +350,6 @@ app.post('/survey.html', function(req, res){
 	var lname = req.body.lastname; 
 	var des = req.body.description; 
 	var classifications = req.body.classifications; 
-	
-	console.log(s_id); 
-	console.log(urgencyNum); 
-	console.log(fname);
-	console.log(lname); 
-	console.log(des); 
-	console.log(classifications); 
 
 	var class_str = '{';
 	for(var i = 0; i < classifications.length; i++)
