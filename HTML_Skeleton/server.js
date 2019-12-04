@@ -261,11 +261,11 @@ console.log("2");
 
 });
 
-app.get('/staff_form', function(req, res){
+app.get('/staff_form.html', function(req, res){
     res.sendFile('staff_form.html', { root: view_dir } );
 });
 
-app.post('/staff_form', function(req, res){
+app.post('/staff_form.html', function(req, res){
 	// for each( var thing in req.body){
 		console.log("request body: " + Object.keys(req.body));
 		console.log("First Name:" + req.body.fname);
@@ -307,7 +307,7 @@ app.get('/staff-page.html', function(req, res){
 app.post('/staff-page.html/select_hall', function(req, res){
     var hall_name = req.body.hall;
 
-    var query = 'SELECT * FROM resident_advisors LEFT JOIN profile_information ON resident_advisors.student_ID = profile_information.user_ID WHERE resident_advisors.residence_hall = \'' + hall_name + '\';';
+    var query = 'SELECT * FROM residentAdvisors LEFT JOIN profile_information ON residentAdvisors.student_ID = profile_information.user_ID WHERE residentAdvisors.residence_hall = \'' + hall_name + '\';';
 
 		searchStaff(query);
 
@@ -375,13 +375,13 @@ app.post('/survey.html', function(req, res){
 	console.log(class_str); 
 
 	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;"; 
-	db.task('get-everything', task =>{
+	db.task('get-everything', task => {
 		return task.batch([
 			task.any(insert_statment)
 		]);
 	})
 	.then(info => {
-		res.redirect('/resourcepage.html');
+		res.redirect('/survey.html');
 		console.log("Successfully Inserted into tables");
 	})
 	.catch(function(err){
