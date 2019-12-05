@@ -22,12 +22,17 @@ const dbConfig = {
 
 
 let db = pgp(dbConfig);
+app.set('view engine', 'ejs');
 
 // statically serve the files (images, javascript, css...) in current directory.
 // NOTE: may need to serve files in 'resources' instead, for better security; this requires fixing urls in html files.
 app.use(express.static(__dirname));
 
 var view_dir = path.join(__dirname + "/views")
+
+app.set('views', __dirname);
+//global variable for session (initialized inside login)
+var sess;
 
 // send html files to browser, depending on url request.
 app.get('/homepage.html', function(req, res){
@@ -71,9 +76,9 @@ app.post('/homepage.html/verify',function(req,res){
             }
             else{
                 console.log("Log in successful");
-        
+        	sess = logInEmail;
 				// Log them in and maintain their session
-				res.redirect('/staff_form.html');
+				res.redirect('/staff_form');
             }
         })
         .catch(function(err){
@@ -262,20 +267,47 @@ console.log("2");
 
 });
 
-app.get('/staff_form.html', function(req, res){
-    res.sendFile('staff_form.html', { root: view_dir } );
+app.get('/staff_form', function(req, res){
+    		var currentUser = sess;
+    //res.sendFile('staff_form.html', { root: view_dir } );
+		var query = "SELECT preferred_name, major, gender_identity, bio FROM profile_information WHERE user_email = '" + sess + "';";
+		db.any(query)
+			.then(function (rows) {
+				console.log(rows);
+				console.log("preferred_name: " + rows[0].preferred_name);
+				res.render('views/staff_form.ejs', {
+					email: sess,
+					prefname: rows[0].preferred_name,
+					mj: rows[0].major,
+					gi: rows[0].gender_identity,
+					biography: rows[0].bio
+				});
+			})
+			.catch(function (err) {
+            // display error message in case an error
+            //req.flash('error', err); //if this doesn't work for you replace with console.log
+            //console.log('error',err);
+						console.log('error', err);
+            res.render('views/staff_form', {
+                title: 'Staff Form',
+                data: '',
+                color: '',
+                color_msg: ''
+            })
+        })
 });
 
 app.post('/staff_form.html', function(req, res){
-	// for each( var thing in req.body){
+// for each( var thing in req.body){
 		console.log("request body: " + Object.keys(req.body));
 		console.log("First Name:" + req.body.fname);
+		console.log("This is the sesssion: " + sess)
 	// }
 	var pname = req.body.fname;
 	var gi = req.body.gender;
 	var major = req.body.major;
 	var bio = req.body.bio;
-	var id = req.body.id;
+	//var id = req.body.id;
 	String(id);
 	//var pic_path = req.body.pic;
 	//			MISSING PICTURE
@@ -283,7 +315,7 @@ app.post('/staff_form.html', function(req, res){
 	// "(preferred_name, gender_identity, major, bio) " +
 	// "VALUES ('"+pname+"', '"+gi+"', '"+major+"', '"+bio+"') WHERE user_ID = '"+id+"' "; //missing image and NOT WORKING WITH where
 	var insert = "UPDATE profile_information SET preferred_name = '" + pname + "', gender_identity = '" + gi +
-	"', major = '" + major + "', bio = '" + bio + "' WHERE user_ID = " + " CAST('" + id + "' AS CHAR(9));";
+	"', major = '" + major + "', bio = '" + bio + "' WHERE user_email = '"+ sess +"';"; //user_ID = " + " CAST('" + id + "' AS CHAR(9));";
 	console.log(insert);
 	console.log(typeof id);
 		db.task('get-everything', task =>{
