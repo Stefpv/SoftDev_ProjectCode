@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="staff_form.html"><h4>Profile</h4></a>
+                <a class="nav-link" href="staff_form.ejs"><h4>Profile</h4></a>
             </li>
             <li class="nav-item active">
             <a class="nav-link" href="staff-page.html"><h4>Staff</h4></a>
@@ -40,11 +40,14 @@
                   <a class = "nav-link" href = "homepage.html">Log out</a>
               </li>
           </ul>
-        </div>
-        
+      </div>
+
+       <h1>Staff's Personal Profile</h1>
+
     </nav>
+    <!-- <h1>Email: <%=email%></h1> -->
     <div class="container">
-      <form id="personal_info"action="/staff_form.html" method="post">
+      <form id="personal_info"action="/staff_form" method="post">
         <br>
       </br>
         <div class="row">
@@ -62,27 +65,23 @@
         </div>
         <div class="col">
           <label class="font-weight-bold">Preferred First Name</label>
-          <input class="form-control" name="fname">
+          <input class="form-control" name="fname" value= <%= prefname %>>
           <br>
         </br>
           <label class="font-weight-bold">Gender Identity</label>
-          <input class="form-control" name="gender">
+          <input class="form-control" name="gender" value= <%= gi %>>
           <br>
         </br>
           <label class="font-weight-bold">Major</label>
-          <input class="form-control" name="major">
-        <br>
-        </br>
-          <label class="font-weight-bold">ID</label>
-          <input class="form-control" name="id">
+          <input class="form-control" name="major" value= <%= mj %>>
         </div>
       </div>
 
       <br>
     </br>
         <div>
-          <label class="font-weight-bold" for="text">Biography</label>
-          <textarea class="form-control" id="text" rows="5" maxlength="300" placeholder="300 Characters Max" name="bio"></textarea>
+          <label class="font-weight-bold" for="text">Biography (300 Characters Max)</label>
+          <textarea class="form-control" id="text" rows="5" maxlength="300" name="bio"><%= biography %></textarea>
         </div>
         <br>
       </br>
