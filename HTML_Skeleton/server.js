@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encod
 const pgp = require('pg-promise')();
 
 // IMPORTANT! Change these to reflect your system.
-const database_name = 'postgres';
-const database_password = 'csci';
+const database_name = 'ras_db';
+const database_password = '4537bas';
 
 const dbConfig = {
 	host: 'localhost',
@@ -62,7 +62,7 @@ app.post('/homepage.html/verify',function(req,res){
         .then(function(rows){
             if(rows.length == 0){
 				console.log("Incorrect Email or Password");
-				
+
 				/* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
 				Procedure found on StackOverflow, by (link to be placed.)
 				- generate random 258 bit token for user, and store in database
@@ -78,7 +78,7 @@ app.post('/homepage.html/verify',function(req,res){
                 console.log("Log in successful");
         	sess = logInEmail;
 				// Log them in and maintain their session
-				res.redirect('/staff_form');
+				res.redirect('/staff_form.ejs');
             }
         })
         .catch(function(err){
@@ -100,15 +100,15 @@ app.post('/homepage.html/signup', function(req,res){
 	var password = req.body.confirmPassword;
 
     // Change capitalization formatting to match the format of the data base
-        // First Name 
+        // First Name
         firstName = firstName[0].toUpperCase() + firstName.substring(1).toLowerCase();
-        
+
         // Last Name
         lastName = lastName[0].toUpperCase() + lastName.substring(1).toLowerCase();
 
         // Email
 		email = email.toLowerCase();
-		
+
 
 	console.log(firstName);
 	console.log(lastName);
@@ -149,8 +149,8 @@ app.post('/homepage.html/signup', function(req,res){
 						console.log("Invalid Hall Director");
 						// "The information that you entered does not correspond to a current Hall Director of the University of Colorado: Boulder."
 						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
-					}            
-		
+					}
+
 				// Upon closing the modal: leave their information in the form, and allow them to change it and submit again
 			}
 			else{
@@ -163,12 +163,12 @@ app.post('/homepage.html/signup', function(req,res){
 					console.log("Account has already been created");
 				}
 				else{ // Create their account
-					
+
 					console.log("Creating Account");
 
 					// Fill in the profile_information table
 					var insert_profile_query = 'INSERT INTO profile_information VALUES (\'' + userID + '\',\'' + password + '\',\'' + email + '\',\'' + firstName + ' ' + lastName + '\',\'' + staffPosition + '\',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ',' + '\'\'' + ');';
-					
+
 					// Update the boolean value to indicate that they have created an account for our website
 					var update_boolean_query;
 					if(staffPosition == "Resident Advisor"){
@@ -177,7 +177,7 @@ app.post('/homepage.html/signup', function(req,res){
 					else{
 						update_boolean_query = 'UPDATE hall_directors SET has_staff_portal_account=TRUE WHERE staff_ID =\'' + userID + '\';';
 					}
-					
+
 					console.log(insert_profile_query);
 					console.log(update_boolean_query);
 
@@ -195,7 +195,7 @@ app.post('/homepage.html/signup', function(req,res){
 					})
 					.catch(error => {
 						console.log('SQL queries were unable to be processed',error);
-					})		
+					})
 				}
 			}
         })
@@ -267,7 +267,7 @@ console.log("2");
 
 });
 
-app.get('/staff_form', function(req, res){
+app.get('/staff_form.ejs', function(req, res){
     		var currentUser = sess;
     //res.sendFile('staff_form.html', { root: view_dir } );
 		var query = "SELECT preferred_name, major, gender_identity, bio FROM profile_information WHERE user_email = '" + sess + "';";
@@ -297,7 +297,7 @@ app.get('/staff_form', function(req, res){
         })
 });
 
-app.post('/staff_form.html', function(req, res){
+app.post('/staff_form', function(req, res){
 // for each( var thing in req.body){
 		console.log("request body: " + Object.keys(req.body));
 		console.log("First Name:" + req.body.fname);
@@ -308,7 +308,7 @@ app.post('/staff_form.html', function(req, res){
 	var major = req.body.major;
 	var bio = req.body.bio;
 	//var id = req.body.id;
-	String(id);
+	//String(id);
 	//var pic_path = req.body.pic;
 	//			MISSING PICTURE
 	// var insert = "INSERT INTO profile_information " +
@@ -317,12 +317,22 @@ app.post('/staff_form.html', function(req, res){
 	var insert = "UPDATE profile_information SET preferred_name = '" + pname + "', gender_identity = '" + gi +
 	"', major = '" + major + "', bio = '" + bio + "' WHERE user_email = '"+ sess +"';"; //user_ID = " + " CAST('" + id + "' AS CHAR(9));";
 	console.log(insert);
-	console.log(typeof id);
+	//console.log(typeof id);
 		db.task('get-everything', task =>{
 			return task.batch([
 				task.any(insert)
 			]);
 		})
+		.then(info =>{
+				res.render('views/staff_form.ejs', {
+					email: sess,
+					prefname: pname,
+					mj: major,
+					gi: gi,
+					biography: bio
+				});
+			})
+
 		.catch(function (err) {
 				// display error message
 				console.log('Could not process SQL query.', err);
@@ -330,7 +340,7 @@ app.post('/staff_form.html', function(req, res){
 // add some sort of condition in query to only add info if person is logged in, maybe that is something that
 //should be addressed somwhere else in the code
 //try to add picture too!!!!1
-console.log("Name: " + pname + " Gender: " + gi + " ID: " + id);
+//console.log("Name: " + pname + " Gender: " + gi + " ID: " + id);
 });
 
 app.get('/staff-page.html', function(req, res){
@@ -370,18 +380,18 @@ app.post('/staff-page.html/select_hall', function(req, res){
 				}
 });
 
-app.get('/survey.html', function(req,res){	
-	res.sendFile('survey.html', {root: view_dir}); 	   
-});	
+app.get('/survey.html', function(req,res){
+	res.sendFile('survey.html', {root: view_dir});
+});
 //Post is not working
 app.post('/survey.html', function(req, res){
 
-	var s_id = req.body.studentID; 
-	var urgencyNum = req.body.Urgency; 
-	var fname = req.body.firstname; 
-	var lname = req.body.lastname; 
-	var des = req.body.description; 
-	var classifications = req.body.classifications; 
+	var s_id = req.body.studentID;
+	var urgencyNum = req.body.Urgency;
+	var fname = req.body.firstname;
+	var lname = req.body.lastname;
+	var des = req.body.description;
+	var classifications = req.body.classifications;
 
 	var class_str = '{';
 	for(var i = 0; i < classifications.length; i++)
@@ -395,12 +405,12 @@ app.post('/survey.html', function(req, res){
 			class_str += classifications[i].toString() + ', ';
 		}
 	}
-	class_str += '}'; 
+	class_str += '}';
 
 
-	console.log(class_str); 
+	console.log(class_str);
 
-	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;"; 
+	var insert_statment = "INSERT INTO feedback(user_ID, urgency, first_name, last_name, description, classifications) Values('"+s_id+"','"+urgencyNum+"','"+fname+"', '"+lname+"','"+des+"','"+class_str+"') ON CONFLICT DO NOTHING;";
 	db.task('get-everything', task => {
 		return task.batch([
 			task.any(insert_statment)
