@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encod
 const pgp = require('pg-promise')();
 
 // IMPORTANT! Change these to reflect your system.
-const database_name = 'ras_db';
-const database_password = '4537bas';
+const database_name = 'postgres';
+const database_password = 'csci';
 
 const dbConfig = {
 	host: 'localhost',
@@ -349,35 +349,41 @@ app.get('/staff-page.html', function(req, res){
 
 app.post('/staff-page.html/select_hall', function(req, res){
     var hall_name = req.body.hall;
+		var hall_director_query = 'SELECT * FROM hall_directors INNER JOIN profile_information ON hall_directors.staff_ID = profile_information.user_ID WHERE \'' + hall_name + '\'' + ' = ANY (hall_directors.residence_halls) ORDER BY profile_information.preferred_name;';
+    var resident_advisor_query = 'SELECT * FROM resident_advisors INNER JOIN profile_information ON resident_advisors.student_ID = profile_information.user_ID WHERE resident_advisors.residence_hall = \'' + hall_name + '\' ORDER BY profile_information.preferred_name;';
 
-    var query = 'SELECT * FROM resident_advisors LEFT JOIN profile_information ON resident_advisors.student_ID = profile_information.user_ID WHERE resident_advisors.residence_hall = \'' + hall_name + '\';';
+		var staff_array = [];
 
-		searchStaff(query);
+		// obtain results from both of the queries above
+		db.multi(hall_director_query + resident_advisor_query)
+	   .then(([hall_directors, resident_advisors]) => {
+				 var user;
 
-    function searchStaff (query) {
-			db.any(query)
-	      .then(function (rows) {
-	          var staff_array = [];
+				 // add hall director info to the staff array
+				 if (hall_directors.length > 0) {
+					 for (i = 0; i < hall_directors.length; i++) {
+						 user = hall_directors[i];
+						 staff_array.push({picture_link: user.profile_picture, name: user.preferred_name, occupation: user.staff_position, major: user.major, gender: user.gender_identity, description: user.bio});
+					 }
+				 }
 
-	          for (i = 0; i < rows.length; i++) {
-	            var user = rows[i];
-	            staff_array.push({picture_link: user.profile_picture, name: user.preferred_name, occupation: user.staff_position, major: user.major, gender: user.gender_identity, description: user.bio});
-	          }
+				 // add resident advisor info to thestaff array
+				 if (resident_advisors.length > 0) {
+					 for (i = 0; i < resident_advisors.length; i++) {
+						 user = resident_advisors[i];
+						 staff_array.push({picture_link: user.profile_picture, name: user.preferred_name, occupation: user.staff_position, major: user.major, gender: user.gender_identity, description: user.bio});
+					 }
+			 	 }
 
-	          res.json({
-	            staff : staff_array
-	          });
-	        })
-	        .catch(function (err) {
-	            // display error message
-	            console.log('Could not process SQL query.', err);
+				 res.json({
+					 staff : staff_array
+				 });
+	   })
+	   .catch(error => {
+				 // display error message
+				 console.log('Could not process SQL queries.', error);
+	   });
 
-	            // send back an empty array.
-	            res.json({
-	              staff : []
-	            });
-	        })
-				}
 });
 
 app.get('/survey.html', function(req,res){
