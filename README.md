@@ -11,8 +11,10 @@ The Residence Hall Staff Portal contains a launching page that both describes th
   This product is currently supported through deployment on the local host of a user's machine. In order to successfully run the application, one must follow the steps below:
   Installation and Set Up:
   	1. Download the entire SoftDev_ProjectCode repository.
+	
   	2. Install PostgreSQL (if not already installed) for database use.
 	   	On Linux: sudo apt-get install postgresql postgresql-contrib
+		
 	3. Install node.js.
 		On Linux:  sudo apt-get install -y nodejs
 
