@@ -24,9 +24,9 @@ This product is currently supported through deployment on the local host of a us
 		On Linux: sudo -u postgres service postgresql start OR service postgresql start
   	2. Start PostgreSQL session
 		On Linux: sudo -u postgres psql
-  	3. Initialize your database using the file fullDataBase.pgqsl. You can either import the file or simply copy the contents and 	            paste them into your PostgreSQL session.
-  	3. Change the database name and database password in lines 12 and 13 of the file server.js to match the password and name of                your local PostgreSQL database.
-  	4. Using your terminal, change to the directory where you downloaded the SoftDev_ProjectCode repository, and enter the                      HTML_Skeleton folder.
+  	3. Initialize your database using the file fullDataBase.pgqsl. You can either import the file or simply copy the contents and paste them into your PostgreSQL session.
+  	3. Change the database name and database password in lines 12 and 13 of the file server.js to match the password and name of your local PostgreSQL database.
+  	4. Using your terminal, change to the directory where you downloaded the SoftDev_ProjectCode repository, and enter the HTML_Skeleton folder.
   	6. Start the node.js server with the command: node server.js
 	7. Open a web browser and go to the following website: http://localhost:3000/homepage.ejs
 	
@@ -36,4 +36,4 @@ This product is currently supported through deployment on the local host of a us
 	3. After setting a password and creating an account for a sample staff member you can log in to the website.
 	
 ### Testing Features:
-  	1. Now that you have created an account with a sample staff member, you may test the various features of our website and edit 	 	    your personal database as you see fit.
+  	1. Now that you have created an account with a sample staff member, you may test the various features of our website and edit your personal database as you see fit.
