@@ -33,7 +33,7 @@ This product is currently supported through deployment on the local host of a us
 ### Creating an account with a sample staff member and logging in:
   	1. Look over the rows of the resident_advisors and hall_directors tables in your database and shoose a row to use.
 	2. Click on the sign up button and enter the information corresponding to the staff member you chose.
-	3. After setting a password and creating an account for a sample staff member you can log in to the website.
+	3. After setting a password and creating an account for a sample staff member, you can log in to the website.
 	
 ### Testing Features:
   	1. Now that you have created an account with a sample staff member, you may test the various features of our website and edit your personal database as you see fit.
