@@ -5,11 +5,12 @@ Currently Resident Advisors and Hall Directors utilize many different resources 
 The Residence Hall Staff Portal contains a launching page that both describes the features of the website and allows users to log in, or sign up if they have not yet created an account. After signing in, the user will be logged in to their own unique session. Using a navbar located at the top of each page, the user can toggle between the different features of the website. The first feature available is the profile page, which is specific to the current user, where they can view and edit their personal information. The user can then change to the staff page, which can be used to filter through each dorm and view the staff members of each hall. The remaining two pages are the resources page and the survey page. The resources page contains links and descriptions of each website the RAs will need throughout their time on staff. Hall Directors will have the ability to add resources to this page as needed. The survey page is a form that gives users the opportunity to provide feedback regarding several areas of their work.
 
 ## Repository Structure
-	This repository is organized into folders according to the
+This repository is organized into folders according to the
 
 ## Downloading, Running and Testing the Code
-  This product is currently supported through deployment on the local host of a user's machine. In order to successfully run the application, one must follow the steps below:
-  Installation and Set Up:
+This product is currently supported through deployment on the local host of a user's machine. In order to successfully run the application, one must follow the steps below:
+
+### Installation and Set Up:
   	1. Download the entire SoftDev_ProjectCode repository.
 	
   	2. Install PostgreSQL (if not already installed) for database use.
@@ -18,7 +19,7 @@ The Residence Hall Staff Portal contains a launching page that both describes th
 	3. Install node.js.
 		On Linux:  sudo apt-get install -y nodejs
 
-  Starting the server and running it on your local host:
+### Starting the server and running it on your local host:
   	1. Start the database server
 		On Linux: sudo -u postgres service postgresql start OR service postgresql start
   	2. Start PostgreSQL session
@@ -29,10 +30,10 @@ The Residence Hall Staff Portal contains a launching page that both describes th
   	6. Start the node.js server with the command: node server.js
 	7. Open a web browser and go to the following website: http://localhost:3000/homepage.ejs
 	
-  Creating an account with a sample staff member and logging in:
+### Creating an account with a sample staff member and logging in:
   	1. Look over the rows of the resident_advisors and hall_directors tables in your database and shoose a row to use.
 	2. Click on the sign up button and enter the information corresponding to the staff member you chose.
 	3. After setting a password and creating an account for a sample staff member you can log in to the website.
 	
-  Testing Features:
+### Testing Features:
   	1. Now that you have created an account with a sample staff member, you may test the various features of our website and edit 	 	    your personal database as you see fit.
