@@ -35,18 +35,22 @@ app.set('views', __dirname);
 var sess;
 
 // send html files to browser, depending on url request.
-app.get('/homepage.html', function(req, res){
-    res.sendFile('homepage.html', { root: view_dir } );
+app.get('/homepage.ejs', function(req, res){
+//     res.sendFile('homepage.html', { root: view_dir } );
+	res.render('views/homepage.ejs',{
+		my_title:"Home Page",
+		success: "true"
+	});
 });
 
-app.get('/login.html', function(req, res){
-    res.sendFile('login.html', { root: view_dir } );
-});
+// app.get('/login.html', function(req, res){
+//     res.sendFile('login.html', { root: view_dir } );
+// });
 
 // NOTE: storing user password in database is not secure. Might be better to hash password into database.
 
 // verifies login request
-app.post('/homepage.html/verify',function(req,res){
+app.post('/homepage.ejs/verify',function(req,res){
 
     // Retrieve form data from log in page
     var logInEmail = req.body.loginEmail;
@@ -62,6 +66,10 @@ app.post('/homepage.html/verify',function(req,res){
         .then(function(rows){
             if(rows.length == 0){
 				console.log("Incorrect Email or Password");
+		    		res.render('views/homepage.ejs',{
+					my_title: "Home Page",
+					success: "false"
+				});
 
 				/* TO DO: remember user has logged in for the duration of site visit (nate that this is different than 'remember me')
 				Procedure found on StackOverflow, by (link to be placed.)
@@ -87,7 +95,7 @@ app.post('/homepage.html/verify',function(req,res){
 })
 
 // process sign up request
-app.post('/homepage.html/signup', function(req,res){
+app.post('/homepage.ejs/signup', function(req,res){
 
     console.log("Sign Up Requested");
 
@@ -141,12 +149,19 @@ app.post('/homepage.html/signup', function(req,res){
 				// Create a modal/popup that tells the user the following:
 					if(staffPosition == "Resident Advisor"){
 						console.log("Invalid RA");
-
+						res.render('views/homepage.ejs',{
+							my_title: "Home Page",
+							success: "InvalidRA"
+						});
 						// "The information that you entered does not correspond to a current Resident Advisor of the University of Colorado: Boulder."
 						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
 					}
 					else{
 						console.log("Invalid Hall Director");
+						res.render('views/homepage.ejs',{
+							my_title: "Home Page",
+							success: "InvalidHallDirector"
+						});
 						// "The information that you entered does not correspond to a current Hall Director of the University of Colorado: Boulder."
 						// "Please check that you entered all of your information correctly. If issues persist, please contact ____"
 					}
@@ -161,6 +176,10 @@ app.post('/homepage.html/signup', function(req,res){
 					// Tell the user that an account has aleady been created using the information they entered
 					// "An account has already been created with the information that you entered"
 					console.log("Account has already been created");
+					res.render('views/homepage.ejs',{
+						my_title: "Home Page",
+						success: "accountAlreadyExists"
+					});
 				}
 				else{ // Create their account
 
@@ -190,7 +209,10 @@ app.post('/homepage.html/signup', function(req,res){
 					})
 					.then(info => {
 						// Tell the user that their account has successfully been created, and redirect them to log in
-						res.redirect('/homepage.html');
+						res.render('views/homepage.ejs',{
+							my_title: "Home Page",
+							success: "signUpSuccessful"
+						});
 						console.log("Successfully Inserted into tables");
 					})
 					.catch(error => {
