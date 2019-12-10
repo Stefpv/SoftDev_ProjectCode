@@ -7,18 +7,17 @@ The Residence Hall Staff Portal contains a launching page that both describes th
 This repository is organized into folders according to the project components that are developed with each file. The main directory 'SoftDev_ProjectCode' contains the folder 'RA_Portal_Code', the file 'fullDataBase.pgqsl', and the README.
 
 	SoftDev_ProjectCode/
-		RA_Portal_Code/ - contains all code used for the development of the project
-			node_modules/ - files for modules used in node.js
+		RA_Portal_Code/ - contains all code used for the development of our application
+			node_modules/ - folders for modules used in node.js
 			resources/ - javascript, css, and images
 				css/ - contains files that define css styles and classes
 				img/ - holds the images used throughout the site
-				js/ - javascript that is used in the html and ejs files
-			views/ - the pages that represent the front end
+				js/ - javascript that is used for the html and ejs files
+			views/ - the pages that represent the front end of our application
 			package-lock.json - versions and info for node modules
-			server.js - 
-		fullDataBase.pgqsl
-		README.md
-	RA_Portal_Code
+			server.js - node.js for integration layer and connecting to the database
+		fullDataBase.pgqsl - defines the database and makes inserts into the tables
+		README.md - describes the project
 
 ## Downloading, Running and Testing the Code
 This product is currently supported through deployment on the local host of a user's machine. In order to successfully run the application, one must follow the steps below:
