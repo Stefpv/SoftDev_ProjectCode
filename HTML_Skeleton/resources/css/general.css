@@ -151,3 +151,43 @@
     margin: none;
     position: relative;
     }
+
+/* Alert Error */
+    .alert-error {
+        padding: 5px;
+        /* margin-bottom: 20px; */
+        border: 1px solid transparent;
+        border-radius: 4px;
+        width: 250px;
+        /* height: 32px; */
+        height: 0px;
+        visibility: hidden;
+        /* margin: none; */
+        /* position: relative; */
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        text-align: center;
+        font-size: 15px;
+        display: block;
+    }
+
+    /* Alert Success */
+    .alert-success {
+        padding: 5px;
+        /* margin-bottom: 20px; */
+        border: 1px solid transparent;
+        border-radius: 4px;
+        width: 250px;
+        /* height: 32px; */
+        height: 0px;
+        visibility: hidden;
+        /* margin: none; */
+        /* position: relative; */
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+        text-align: center;
+        font-size: 15px;
+        display: block;
+    }
