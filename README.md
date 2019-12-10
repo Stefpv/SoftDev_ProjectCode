@@ -4,7 +4,8 @@ Currently Resident Advisors and Hall Directors utilize many different resources 
 The Residence Hall Staff Portal contains a launching page that both describes the features of the website and allows users to log in, or sign up if they have not yet created an account. After signing in, the user will be logged in to their own unique session. Using a navbar located at the top of each page, the user can toggle between the different features of the website. The first feature available is the profile page, which is specific to the current user, where they can view and edit their personal information. The user can then change to the staff page, which can be used to filter through each dorm and view the staff members of each hall. The remaining two pages are the resources page and the survey page. The resources page contains links and descriptions of each website the RAs will need throughout their time on staff. Hall Directors will have the ability to add resources to this page as needed. The survey page is a form that gives users the opportunity to provide feedback regarding several areas of their work.
 
 ## Repository Structure
-This repository is organized into folders according to the project components that are developed with each file. The main directory 'SoftDev_ProjectCode' contains the folder 'RA_Portal_Code', the file 'fullDataBase.pgqsl', and the README. 
+This repository is organized into folders according to the project components that are developed with each file. The main directory 'SoftDev_ProjectCode' contains the folder 'RA_Portal_Code', the file 'fullDataBase.pgqsl', and the README.
+
 	SoftDev_ProjectCode/
 		RA_Portal_Code/ - contains all code used for the development of the project
 			node_modules/ - files for modules used in node.js
